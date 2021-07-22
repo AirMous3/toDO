@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
-import Todolist from "./components/Todolist";
+import Todolist, {TaskType} from "./components/Todolist";
 
 function App() {
 
-    let tasks = [
+
+    let tasks: Array<TaskType> = [
         { id:1 , title: "Redux" , isDone: false },
         { id:2 , title: "React" , isDone: false },
         { id:3 , title: "HTML" , isDone: true},
@@ -12,7 +13,7 @@ function App() {
         { id:5 , title: "CSS" , isDone: false},
     ]
 
-    let tasks2 = [
+    let tasks2: Array<TaskType> = [
         { id:1 , title: "Bread" , isDone: true },
         { id:2 , title: "Milk" , isDone: false },
         { id:3 , title: "Water" , isDone: false},
@@ -22,8 +23,8 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist title={"what to buy"}/>
-            <Todolist title={"what to learn"}/>
+            <Todolist title={"what to buy"} tasks={tasks} />
+            <Todolist title={"what to learn"} tasks={tasks2} />
         </div>
     );
 }
