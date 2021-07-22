@@ -9,6 +9,7 @@ export type TaskType = {
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
+    deleteTask: (id: number) => void
 }
 
 function Todolist(props: TodolistPropsType) {
@@ -19,7 +20,12 @@ function Todolist(props: TodolistPropsType) {
                 <button>+</button>
             </div>
             <ul>
-                {props.tasks.map((t) => <li key={t.id}><input type="checkbox" checked={t.isDone}/> <span>{t.title}</span></li> )}
+                {props.tasks.map((t) =>
+                    <li key={t.id}>
+                        <input type="checkbox" checked={t.isDone}/>
+                        <span>{t.title}</span>
+                        <button onClick={ () => props.deleteTask(t.id)}>del</button>
+                    </li> )}
 
             </ul>
             <div>
