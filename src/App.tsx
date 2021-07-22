@@ -13,18 +13,11 @@ function App() {
         { id:5 , title: "CSS" , isDone: false},
     ]
 
-    let tasks2: Array<TaskType> = [
-        { id:1 , title: "Bread" , isDone: true },
-        { id:2 , title: "Milk" , isDone: false },
-        { id:3 , title: "Water" , isDone: false},
-        { id:4 , title: "Chicken" , isDone: true},
-        { id:5 , title: "Chips" , isDone: true},
-    ]
+
 
     return (
         <div className="App">
-            <Todolist title={"what to buy"} tasks={tasks} />
-            <Todolist title={"what to learn"} tasks={tasks2} />
+            <Todolist title={"what to learn"} tasks={tasks} />
         </div>
     );
 }
