@@ -1,7 +1,7 @@
 import React from "react";
 
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -9,7 +9,7 @@ export type TaskType = {
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
-    deleteTask: (id: number) => void
+    deleteTask: (id: string) => void
     changeFilter: (value: FilterType) => void
 }
 export type FilterType = "all" | "completed" | "active"

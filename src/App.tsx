@@ -1,20 +1,21 @@
 import React, {useState} from 'react';
 import './App.css';
 import Todolist, {FilterType, TaskType} from "./components/Todolist";
+import {v1} from "uuid";
 
 function App() {
 
     let [tasks, setTasks] = useState<Array<TaskType>>([
-        { id:1 , title: "Redux" , isDone: false },
-        { id:2 , title: "React" , isDone: false },
-        { id:3 , title: "HTML" , isDone: true},
-        { id:4 , title: "Js" , isDone: true},
-        { id:5 , title: "CSS" , isDone: false},
+        { id:v1() , title: "Redux" , isDone: false },
+        { id:v1() , title: "React" , isDone: false },
+        { id:v1() , title: "HTML" , isDone: true},
+        { id:v1() , title: "Js" , isDone: true},
+        { id:v1() , title: "CSS" , isDone: false},
     ])
 
     let [filter, setFilter] = useState<FilterType>("all")
 
-    const deleteTask = (id: number) => {
+    const deleteTask = (id: string) => {
         tasks = tasks.filter(i => i.id != id )
         setTasks(tasks)
     }
