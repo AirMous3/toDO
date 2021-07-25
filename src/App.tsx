@@ -13,6 +13,12 @@ function App() {
         { id:v1() , title: "CSS" , isDone: false},
     ])
 
+    const addTask = (title: string) => {
+        let newTask: TaskType = {id: v1() , title , isDone: false}
+        let newTasks = [newTask,...tasks]
+        setTasks(newTasks)
+    }
+
     let [filter, setFilter] = useState<FilterType>("all")
 
     const deleteTask = (id: string) => {
@@ -36,7 +42,7 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist title={"what to learn"} tasks={tasksForTodolist} deleteTask={deleteTask} changeFilter={changeFilter}/>
+            <Todolist title={"what to learn"} tasks={tasksForTodolist} deleteTask={deleteTask} changeFilter={changeFilter} addTask={addTask}/>
         </div>
     );
 }
