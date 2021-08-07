@@ -3,7 +3,7 @@ import React, {ChangeEvent, useState} from "react";
 
 type EditableSpanPropsType = {
     title: string
-    onChange: (title: string) => void
+    onChangeCallBack: (title: string) => void
 }
 
 export const EditableSpan = (props: EditableSpanPropsType) => {
@@ -16,11 +16,11 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
 
     const changeEditMode = () => {
         setEditMode(true)
-        setTitle(title)
+        setTitle(props.title)
     }
     const onBlurEffect = () => {
         setEditMode(false)
-        props.onChange(title)
+        props.onChangeCallBack(title)
     }
 
     return (  editMode ?

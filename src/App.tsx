@@ -96,10 +96,19 @@ function App() {
             setTasks({...tasks})
         }
     }
+    const changeTodolistTile = (todolistId: string, newTitle: string) => {
+        let todolist = todolists.find(tl => tl.id === todolistId)
+        if(todolist){
+            todolist.title = newTitle
+            setTodolists([...todolists])
+        }
+    }
 
     return (
         <div className="App">
+
             <AddItemForm addItemcallBack={addNewTodolist}/>
+
             {
                 todolists.map((tl) => {
 
@@ -118,6 +127,7 @@ function App() {
                                      changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeStatus}
                                      filter={tl.filter} deleteTodolist={deleteTodolist}
                                      changeTaskTitle={changeTaskTitle}
+                                     changeTodolistTile={changeTodolistTile}
                     />
                 })
             }
