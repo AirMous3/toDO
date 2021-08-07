@@ -12,7 +12,7 @@ type TodolistsType = {
 }
 
 type TasksStateType = {
-    [key: string] : Array<TaskType>
+    [key: string]: Array<TaskType>
 }
 
 function App() {
@@ -20,25 +20,23 @@ function App() {
 
     const addTask = (title: string, todolistId: string) => {
         let newTask: TaskType = {id: v1(), title, isDone: false}
-        let tasks = tasksObj[todolistId]
-        let newTasks = [...tasks, newTask]
-        tasksObj[todolistId] = newTasks
-        setTasks({...tasksObj})
+        let newTasks = [...tasks[todolistId], newTask]
+        tasks[todolistId] = newTasks
+        setTasks({...tasks})
     }
 
     const deleteTask = (id: string, todolistId: string) => {
-        let tasks = tasksObj[todolistId]
-        let filteredTasks = tasks.filter(i => i.id != id)
-        tasksObj[todolistId] = filteredTasks
-        setTasks({...tasksObj})
+        let filteredTasks = tasks[todolistId].filter(i => i.id != id)
+        tasks[todolistId] = filteredTasks
+        setTasks({...tasks})
     }
 
+
     const changeStatus = (taskId: string, isDone: boolean, todolistId: string) => {
-        let tasks = tasksObj[todolistId]
-        let task = tasks.find(t => t.id === taskId)
-        if (task) {
-            task.isDone = isDone
-            setTasks({...tasksObj})
+        let findedTask = tasks[todolistId].find(t => t.id === taskId)
+        if (findedTask) {
+            findedTask.isDone = isDone
+            setTasks({...tasks})
         }
     }
 
@@ -53,8 +51,8 @@ function App() {
     const deleteTodolist = (todolistId: string) => {
         let filteredTodolists = todolists.filter(tl => tl.id !== todolistId)
         setTodolists(filteredTodolists)
-        delete tasksObj[todolistId]
-        setTasks({...tasksObj})
+        delete tasks[todolistId]
+        setTasks({...tasks})
     }
 
     let todolistId1 = v1()
@@ -65,7 +63,7 @@ function App() {
         {id: todolistId2, title: "What to buy", filter: "all"},
     ])
 
-    let [tasksObj, setTasks] = useState<TasksStateType>({
+    let [tasks, setTasks] = useState<TasksStateType>({
         [todolistId1]: [
             {id: v1(), title: "Redux", isDone: false},
             {id: v1(), title: "React", isDone: false},
@@ -85,20 +83,27 @@ function App() {
     let newTodolistId = v1()
 
     const addNewTodolist = (title: string) => {
-        let newTodolist: TodolistsType = {id: newTodolistId ,title, filter: "all"}
+        let newTodolist: TodolistsType = {id: newTodolistId, title, filter: "all"}
         setTodolists([...todolists, newTodolist])
-        //let newTodolistToState: TasksStateType = {[newTodolist.id]:[]}   setTasks({...tasksObj,...newTodolistToState})
-        setTasks({...tasksObj,[newTodolist.id]:[]})
+        //let newTodolistToState: TasksStateType = {[newTodolist.id]:[]}   setTasks({...tasks,...newTodolistToState})
+        setTasks({...tasks, [newTodolist.id]: []})
 
+    }
+    const changeTaskTitle = (taskId: string, todolistId: string, newTitle: string) => {
+        let findedTask = tasks[todolistId].find(t => t.id === taskId)
+        if (findedTask) {
+            findedTask.title = newTitle
+            setTasks({...tasks})
+        }
     }
 
     return (
         <div className="App">
-            <AddItemForm addItemcallBack={ addNewTodolist } />
+            <AddItemForm addItemcallBack={addNewTodolist}/>
             {
                 todolists.map((tl) => {
 
-                    let tasksForTodolist = tasksObj[tl.id]
+                    let tasksForTodolist = tasks[tl.id]
 
                     if (tl.filter === "active") {
                         tasksForTodolist = tasksForTodolist.filter(i => !i.isDone)
@@ -112,11 +117,12 @@ function App() {
                                      deleteTask={deleteTask}
                                      changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeStatus}
                                      filter={tl.filter} deleteTodolist={deleteTodolist}
+                                     changeTaskTitle={changeTaskTitle}
                     />
                 })
             }
 
-            {/*<Todolist title={"what to learn"} tasksObj={tasksForTodolist} deleteTask={deleteTask}*/}
+            {/*<Todolist title={"what to learn"} tasks={tasksForTodolist} deleteTask={deleteTask}*/}
             {/*          changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeStatus}*/}
             {/*          filter={filter}*/}
             {/*/>*/}
