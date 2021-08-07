@@ -1,4 +1,5 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
+import {AddItemForm} from "./AddItemForm";
 
 export type TaskType = {
     id: string
@@ -21,47 +22,24 @@ export type FilterType = "all" | "completed" | "active"
 
 function Todolist(props: TodolistPropsType) {
 
-    const addTask = () => {
-        if (title.trim() !== "") {
-            props.addTask(title, props.todolistId)
-            setTitle("")
-        } else {
-            setError("Wrong title!")
-        }
-    }
 
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
-        if (e.charCode === 13) {
-            addTask()
-        }
-    }
     const removeTodolist = () => {
         props.deleteTodolist(props.todolistId)
     }
     const onAllFilter = () => props.changeFilter("all", props.todolistId)
     const onActiveFilter = () => props.changeFilter("active", props.todolistId)
     const onCompletedFilter = () => props.changeFilter("completed", props.todolistId)
+    const addTask = (title: string) => {
 
-    let [title, setTitle] = useState("")
-    let [error, setError] = useState<string | null>(null)
-
+        props.addTask(title,props.todolistId)
+    }
 
     return (
         <div>
             <h3>{props.title}
                 <button onClick={removeTodolist}>x</button>
             </h3>
-            <div>
-                <input value={title} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
-                       className={error ? "error" : ""}/>
-                <button onClick={addTask}>+</button>
-                {error && <div className={"error-message"}>{error}</div>}
-            </div>
+            <AddItemForm addItemcallBack={addTask} />
             <ul>
                 {props.tasks.map((t) => {
                     const onDeleteHandler = () => props.deleteTask(t.id, props.todolistId)
