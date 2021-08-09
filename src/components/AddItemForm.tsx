@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button} from "@material-ui/core";
+import {Button, TextField} from "@material-ui/core";
+import {LibraryAddOutlined} from "@material-ui/icons";
 
 type PropsType = {
     addItemCallBack: (title: string) => void
@@ -26,14 +27,15 @@ export const AddItemForm = (props: PropsType) => {
             props.addItemCallBack(title.trim())
             setTitle("")
         } else {
-            setError("Wrong title!")
+            setError("Text incorrect")
         }
     }
 
     return (<div>
-        <input value={title} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
-               className={error ? "error" : ""}/>
-        <Button size={"small"} variant={"text"} onClick={addTask}>+</Button>
-        {error && <div className={"error-message"}>{error}</div>}
+        <TextField helperText={error} value={title}  label={"Type"} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
+               error={!!error}/>
+        <Button size={"large"} variant={"text"} onClick={addTask}>
+            <LibraryAddOutlined/>
+        </Button>
     </div>)
 }
