@@ -1,7 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Button} from "@material-ui/core";
 
 type PropsType = {
-    addItemcallBack: (title: string) => void
+    addItemCallBack: (title: string) => void
 
 }
 
@@ -22,7 +23,7 @@ export const AddItemForm = (props: PropsType) => {
     }
     const addTask = () => {
         if (title.trim() !== "") {
-            props.addItemcallBack(title.trim())
+            props.addItemCallBack(title.trim())
             setTitle("")
         } else {
             setError("Wrong title!")
@@ -32,7 +33,7 @@ export const AddItemForm = (props: PropsType) => {
     return (<div>
         <input value={title} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
                className={error ? "error" : ""}/>
-        <button onClick={addTask}>+</button>
+        <Button size={"small"} variant={"text"} onClick={addTask}>+</Button>
         {error && <div className={"error-message"}>{error}</div>}
     </div>)
 }

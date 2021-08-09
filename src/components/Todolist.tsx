@@ -1,6 +1,8 @@
 import React, {ChangeEvent} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 
 export type TaskType = {
     id: string
@@ -40,9 +42,11 @@ function Todolist(props: TodolistPropsType) {
     return (
         <div>
             <h3> <EditableSpan title={props.title} onChangeCallBack={changeTodolistTitle}/>
-                <button onClick={removeTodolist}>x</button>
+                <Button size={"small"} onClick={removeTodolist}>
+                    <Delete/>
+                </Button>
             </h3>
-            <AddItemForm addItemcallBack={addTask} />
+            <AddItemForm addItemCallBack={addTask} />
             <ul>
                 {props.tasks.map((t) => {
                     const onDeleteHandler = () => props.deleteTask(t.id, props.todolistId)
@@ -62,12 +66,11 @@ function Todolist(props: TodolistPropsType) {
 
             </ul>
             <div>
-                <button className={props.filter === "all" ? "active-filter" : ""} onClick={onAllFilter}>All</button>
-                <button className={props.filter === "active" ? "active-filter" : ""} onClick={onActiveFilter}>Active
-                </button>
-                <button className={props.filter === "completed" ? "active-filter" : ""}
-                        onClick={onCompletedFilter}>Completed
-                </button>
+                <Button size={"small"} variant={props.filter === "all" ? "contained" : "text"}  onClick={onAllFilter}>All</Button>
+                <Button size={"small"} color={"primary"} variant={props.filter === "active" ? "contained" : "text"}  onClick={onActiveFilter}>Active
+                </Button>
+                <Button size={"small"} color={"secondary"} variant={props.filter === "completed" ? "contained" : "text"} onClick={onCompletedFilter}>Completed
+                </Button>
             </div>
         </div>
 

@@ -107,7 +107,7 @@ function App() {
     return (
         <div className="App">
 
-            <AddItemForm addItemcallBack={addNewTodolist}/>
+            <AddItemForm addItemCallBack={addNewTodolist}/>
 
             {
                 todolists.map((tl) => {
