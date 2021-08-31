@@ -6,7 +6,7 @@ import {AddItemForm} from "./components/AddItemForm";
 import {Container, Grid, Paper} from "@material-ui/core";
 
 
-type TodolistsType = {
+export type TodolistsType = {
     id: string
     title: string
     filter: string

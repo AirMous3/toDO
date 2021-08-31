@@ -50,7 +50,7 @@ function Todolist(props: TodolistPropsType) {
                 </Button>
             </h3>
             <AddItemForm addItemCallBack={addTask} />
-            <div>
+            <div style={{padding: "20px"}}>
                 {props.tasks.map((t) => {
                     const onDeleteHandler = () => props.deleteTask(t.id, props.todolistId)
                     const onIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
