@@ -2,16 +2,12 @@ import React, {ChangeEvent} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox} from "@material-ui/core";
-import {
-    DeleteOutlined,
+import {DeleteOutlined,
     HighlightOffOutlined
 } from "@material-ui/icons";
+import {TaskType} from "../state/tasks-Reducer";
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+
 
 type TodolistPropsType = {
     deleteTodolist: (todolistId: string) => void
