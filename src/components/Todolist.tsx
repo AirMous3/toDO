@@ -8,6 +8,7 @@ import { AddTask, ChangeTaskStatus, ChangeTaskTitle, RemoveTask, TaskType } from
 import { ChangeTodolistFilter, ChangeTodolistTitle, RemoveTodolist } from "../state/todolists-Reducer";
 import { AddItemForm } from "./AddItemForm";
 import { EditableSpan } from "./EditableSpan";
+import s from './Todolist.module.css';
 
 
 type TodolistPropsType = {
@@ -45,42 +46,51 @@ function Todolist(props: TodolistPropsType) {
 
 
     return (
-        <div>
+        <div className={s.container}>
 
-            <h3><EditableSpan title={props.title} onChangeCallBack={changeTodolistTitle} />
-                <Button size={"small"} onClick={removeTodolist}>
-                    <DeleteOutlined />
-                </Button>
+            <h3 className={s.span} >
+                <div >
+                    <EditableSpan title={props.title} onChangeCallBack={changeTodolistTitle} />
+                </div>
+                <div className={s.deleteTodolistIcon}>
+                    <Button size={"small"} onClick={removeTodolist}>
+                        <DeleteOutlined />
+                    </Button>
+                </div>
             </h3>
             <AddItemForm addItemCallBack={addTask} />
-            <div style={{ padding: "20px" }}>
+            <div >
                 {tasksForTodolist.map((t) => {
-                    const onDeleteHandler = () => dispatch(RemoveTask(t.id, props.todolistId))
+                    const onDeleteHandler = () => dispatch(RemoveTask(t.id, props.todolistId)) // удаление таски
                     const onIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(ChangeTaskStatus(t.id, e.currentTarget.checked, props.todolistId))
+                        dispatch(ChangeTaskStatus(t.id, e.currentTarget.checked, props.todolistId))  // смена статуса таски
                     }
                     const onChangeTaskTitle = (newTitle: string) => {
-                        dispatch(ChangeTaskTitle(t.id, newTitle, props.todolistId))
+                        dispatch(ChangeTaskTitle(t.id, newTitle, props.todolistId)) // смена имени таски 
                     }
-                    return <div key={t.id} className={t.isDone === true ? "isDone" : ""}>
-                        <Checkbox checked={t.isDone} onChange={onIsDoneHandler} />
+                    return <div className={`${s.tasks} ${t.isDone ? s.isDone : ''}`} key={t.id} >
 
-                        <EditableSpan title={t.title} onChangeCallBack={onChangeTaskTitle} />
+                        <div >
+                            <Checkbox size={'small'} checked={t.isDone} onChange={onIsDoneHandler} />
 
-                        <Button size={"small"} onClick={onDeleteHandler}>
-                            <HighlightOffOutlined />
-                        </Button>
+                            <EditableSpan title={t.title} onChangeCallBack={onChangeTaskTitle} />
+                        </div>
+                        <div >
+                            <Button size={"small"} onClick={onDeleteHandler}>
+                                <HighlightOffOutlined />
+                            </Button>
+                        </div>
                     </div>
                 })}
 
             </div>
-            <div>
+            <div className={s.status}>
                 <Button size={"small"} variant={props.filter === "all" ? "contained" : "text"}
                     onClick={onAllFilter}>All</Button>
                 <Button size={"small"} color={"primary"} variant={props.filter === "active" ? "contained" : "text"}
                     onClick={onActiveFilter}>Active
                 </Button>
-                <Button size={"small"} color={"secondary"} variant={props.filter === "completed" ? "contained" : "text"}
+                <Button size={"small"} color={"warning"} variant={props.filter === "completed" ? "contained" : "text"}
                     onClick={onCompletedFilter}>Completed
                 </Button>
             </div>

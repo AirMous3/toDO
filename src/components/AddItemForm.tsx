@@ -33,10 +33,10 @@ export const AddItemForm = (props: PropsType) => {
         }
     }
 
-    return (<div>
+    return (<div style={{ padding: "10px" }}>
         <TextField helperText={error} value={title} label={"Type"} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
             error={!!error} />
-        <Button size={"large"} variant={"text"} onClick={addTask}>
+        <Button style={{ marginRight: '-10px' }} size={"large"} variant={"text"} onClick={addTask}>
             <LibraryAddOutlined />
         </Button>
     </div>)

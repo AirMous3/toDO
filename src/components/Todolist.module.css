@@ -1,0 +1,21 @@
+.container {
+    padding: 20px;
+}
+.span {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.deleteTodolistIcon {
+    margin-right: -20px;
+}
+.tasks {
+    display: flex;
+    justify-content: space-between;
+}
+.isDone {
+    opacity: 0.5;
+}
+.status {
+    margin-top: 20px;
+}
