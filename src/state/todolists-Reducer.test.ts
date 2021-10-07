@@ -1,11 +1,11 @@
 import {v1} from 'uuid';
-import {TodolistsType} from "../App";
 import {
     AddTodolist,
     ChangeTodolistFilter,
     ChangeTodolistTitle,
     RemoveTodolist,
-    todolistsReducer
+    todolistsReducer,
+    TodolistsType
 } from "./todolists-Reducer";
 import {FilterType} from "../components/Todolist";
 

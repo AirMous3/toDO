@@ -1,5 +1,4 @@
-import {TasksStateType} from '../App';
-import {AddTask, ChangeTaskStatus, ChangeTaskTitle, RemoveTask, tasksReducer} from "./tasks-Reducer";
+import {AddTask, ChangeTaskStatus, ChangeTaskTitle, RemoveTask, tasksReducer, TasksStateType} from "./tasks-Reducer";
 import {AddTodolist, RemoveTodolist} from "./todolists-Reducer";
 
 

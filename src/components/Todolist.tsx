@@ -1,12 +1,13 @@
-import React, {ChangeEvent} from "react";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox} from "@material-ui/core";
-import {DeleteOutlined, HighlightOffOutlined} from "@material-ui/icons";
-import {AddTask, ChangeTaskStatus, ChangeTaskTitle, RemoveTask, TaskType} from "../state/tasks-Reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {ChangeTodolistFilter, ChangeTodolistTitle, RemoveTodolist} from "../state/todolists-Reducer";
-import {AppRootStateType} from "../state/redux/store";
+
+import { DeleteOutlined, HighlightOffOutlined } from "@mui/icons-material";
+import { Button, Checkbox } from "@mui/material";
+import React, { ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppRootStateType } from "../state/redux/store";
+import { AddTask, ChangeTaskStatus, ChangeTaskTitle, RemoveTask, TaskType } from "../state/tasks-Reducer";
+import { ChangeTodolistFilter, ChangeTodolistTitle, RemoveTodolist } from "../state/todolists-Reducer";
+import { AddItemForm } from "./AddItemForm";
+import { EditableSpan } from "./EditableSpan";
 
 
 type TodolistPropsType = {
@@ -45,13 +46,14 @@ function Todolist(props: TodolistPropsType) {
 
     return (
         <div>
-            <h3><EditableSpan title={props.title} onChangeCallBack={changeTodolistTitle}/>
+
+            <h3><EditableSpan title={props.title} onChangeCallBack={changeTodolistTitle} />
                 <Button size={"small"} onClick={removeTodolist}>
-                    <DeleteOutlined/>
+                    <DeleteOutlined />
                 </Button>
             </h3>
-            <AddItemForm addItemCallBack={addTask}/>
-            <div style={{padding: "20px"}}>
+            <AddItemForm addItemCallBack={addTask} />
+            <div style={{ padding: "20px" }}>
                 {tasksForTodolist.map((t) => {
                     const onDeleteHandler = () => dispatch(RemoveTask(t.id, props.todolistId))
                     const onIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,12 +63,12 @@ function Todolist(props: TodolistPropsType) {
                         dispatch(ChangeTaskTitle(t.id, newTitle, props.todolistId))
                     }
                     return <div key={t.id} className={t.isDone === true ? "isDone" : ""}>
-                        <Checkbox checked={t.isDone} onChange={onIsDoneHandler}/>
+                        <Checkbox checked={t.isDone} onChange={onIsDoneHandler} />
 
-                        <EditableSpan title={t.title} onChangeCallBack={onChangeTaskTitle}/>
+                        <EditableSpan title={t.title} onChangeCallBack={onChangeTaskTitle} />
 
                         <Button size={"small"} onClick={onDeleteHandler}>
-                            <HighlightOffOutlined/>
+                            <HighlightOffOutlined />
                         </Button>
                     </div>
                 })}
@@ -74,12 +76,12 @@ function Todolist(props: TodolistPropsType) {
             </div>
             <div>
                 <Button size={"small"} variant={props.filter === "all" ? "contained" : "text"}
-                        onClick={onAllFilter}>All</Button>
+                    onClick={onAllFilter}>All</Button>
                 <Button size={"small"} color={"primary"} variant={props.filter === "active" ? "contained" : "text"}
-                        onClick={onActiveFilter}>Active
+                    onClick={onActiveFilter}>Active
                 </Button>
                 <Button size={"small"} color={"secondary"} variant={props.filter === "completed" ? "contained" : "text"}
-                        onClick={onCompletedFilter}>Completed
+                    onClick={onCompletedFilter}>Completed
                 </Button>
             </div>
         </div>

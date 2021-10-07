@@ -1,6 +1,8 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, TextField} from "@material-ui/core";
-import {LibraryAddOutlined} from "@material-ui/icons";
+import { LibraryAddOutlined } from "@mui/icons-material";
+import Button from "@mui/material/Button/Button";
+import TextField from "@mui/material/TextField/TextField";
+import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+
 
 type PropsType = {
     addItemCallBack: (title: string) => void
@@ -32,10 +34,10 @@ export const AddItemForm = (props: PropsType) => {
     }
 
     return (<div>
-        <TextField helperText={error} value={title}  label={"Type"} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
-               error={!!error}/>
+        <TextField helperText={error} value={title} label={"Type"} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
+            error={!!error} />
         <Button size={"large"} variant={"text"} onClick={addTask}>
-            <LibraryAddOutlined/>
+            <LibraryAddOutlined />
         </Button>
     </div>)
 }
