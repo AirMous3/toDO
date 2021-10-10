@@ -1,7 +1,7 @@
-import { LibraryAddOutlined } from "@mui/icons-material";
+import {LibraryAddOutlined} from "@mui/icons-material";
 import Button from "@mui/material/Button/Button";
 import TextField from "@mui/material/TextField/TextField";
-import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 
 type PropsType = {
@@ -9,8 +9,8 @@ type PropsType = {
 
 }
 
-export const AddItemForm = (props: PropsType) => {
-
+export const AddItemForm = React.memo((props: PropsType) => {
+    console.log('ADD ITEM FORM')
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -19,7 +19,9 @@ export const AddItemForm = (props: PropsType) => {
         setTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+        if (error) {
+            setError(null)
+        }
         if (e.charCode === 13) {
             addTask()
         }
@@ -33,11 +35,12 @@ export const AddItemForm = (props: PropsType) => {
         }
     }
 
-    return (<div style={{ padding: "10px" }}>
-        <TextField helperText={error} value={title} label={"Type"} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
-            error={!!error} />
-        <Button style={{ marginRight: '-10px' }} size={"large"} variant={"text"} onClick={addTask}>
-            <LibraryAddOutlined />
+    return (<div style={{padding: "10px"}}>
+        <TextField helperText={error} value={title} label={"Type"} onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   error={!!error}/>
+        <Button style={{marginRight: '-10px'}} size={"large"} variant={"text"} onClick={addTask}>
+            <LibraryAddOutlined/>
         </Button>
     </div>)
-}
+})

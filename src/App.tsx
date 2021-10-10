@@ -1,21 +1,21 @@
 import Container from '@mui/material/Container/Container';
 import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
-import React from 'react';
+import React, {useCallback} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import './App.css';
-import { AddItemForm } from "./components/AddItemForm";
+import {AddItemForm, } from "./components/AddItemForm";
 import { Header } from './components/AppBar';
-import Todolist from "./components/Todolist";
 import { AppRootStateType } from "./state/redux/store";
 import { AddTodolist, TodolistsType } from "./state/todolists-Reducer";
+import {Todolist} from "./components/Todolist";
 
 
 function App() {
 
-
+    console.log('APP RENDERED')
     let dispatch = useDispatch()
-    const addNewTodolist = (title: string) => dispatch(AddTodolist(title))
+    const addNewTodolist = useCallback((title: string) => dispatch(AddTodolist(title)),[dispatch])
     let todolists = useSelector<AppRootStateType, Array<TodolistsType>>(state => state.todolists)
 
 
