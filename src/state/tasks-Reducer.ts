@@ -2,7 +2,7 @@ import {v1} from "uuid";
 import {AddTodolist, RemoveTodolist, todolistId1, todolistId2} from "./todolists-Reducer";
 
 
-
+///////////////////////// TYPE
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
@@ -21,7 +21,10 @@ type ActionsType =
     | ReturnType<typeof AddTodolist>
     | ReturnType<typeof RemoveTodolist>
 
-let initialState = { [todolistId1]: [
+//////////////////////////////////////
+
+let initialState = {
+    [todolistId1]: [
         {id: v1(), title: "Redux", isDone: false},
         {id: v1(), title: "React", isDone: false},
         {id: v1(), title: "HTML", isDone: true},
@@ -70,7 +73,7 @@ export const tasksReducer = (state = initialState, action: ActionsType): StateTy
     }
 }
 
-
+//////////////////////////////// AC
 export const AddTask = (title: string, todolistId: string) => ({type: "ADD-TASK", title, todolistId}) as const
 export const RemoveTask = (taskId: string, todolistId: string) => ({type: "REMOVE-TASK", taskId, todolistId}) as const
 export const ChangeTaskStatus = (taskId: string, status: boolean, todolistId: string) => ({
