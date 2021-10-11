@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {TaskType} from "../tasks-Reducer";
 
 let instance = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.1/`,
@@ -67,20 +68,6 @@ export enum TaskPriorities {
 }
 
 
-type TaskType = {
-
-    id: string,
-    title: string,
-    description: string,
-    todoListId: string,
-    order: number,
-    status: TaskStatuses,
-    priority: TaskPriorities,
-    startDate: string,
-    deadline: string,
-    addedDate: string
-
-}
 
 type UpdateTaskType = {
     title: string

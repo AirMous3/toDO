@@ -9,6 +9,7 @@ import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import s from './Todolist.module.css';
 import {Task} from "./Task";
+import {TaskStatuses} from "../state/api/todolists-api";
 
 
 type TodolistPropsType = {
@@ -17,7 +18,7 @@ type TodolistPropsType = {
     filter: string
 
 }
-export type FilterType = "all" | "completed" | "active"
+
 
 export const Todolist = React.memo((props: TodolistPropsType) => {
         console.log('TODOLIST')
@@ -37,12 +38,12 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
 
         if (props.filter === "active") {
 
-            tasksForTodolist = tasksForTodolist.filter((i) => !i.isDone)
+            tasksForTodolist = tasksForTodolist.filter((i) => i.status === TaskStatuses.New)
 
         }
         if (props.filter === "completed") {
 
-            tasksForTodolist = tasksForTodolist.filter(i => i.isDone)
+            tasksForTodolist = tasksForTodolist.filter(i => i.status === TaskStatuses.Completed)
         }
 
 
