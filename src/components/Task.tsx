@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useCallback} from "react";
-import {ChangeTaskStatus, ChangeTaskTitle, RemoveTask, TaskType} from "../state/tasks-Reducer";
+import {ChangeTaskStatus, ChangeTaskTitle, DeleteTask, RemoveTask, TaskType} from "../state/tasks-Reducer";
 import s from "./Todolist.module.css";
 import {Button, Checkbox} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
@@ -14,7 +14,7 @@ type PropsTaskType = {
 export const Task = React.memo(({task, todolistId}: PropsTaskType) => {
     console.log('TASK RENDER')
     let dispatch = useDispatch()
-    const onDeleteHandler = () => dispatch(RemoveTask(task.id, todolistId)) // удаление таски
+    const onDeleteHandler = () => dispatch(DeleteTask(task.id , todolistId)) // удаление таски
     const onIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(ChangeTaskStatus(task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, todolistId))   /*смена статуса таски ,  если чекд true - тогда Completed иначе New*/
     }

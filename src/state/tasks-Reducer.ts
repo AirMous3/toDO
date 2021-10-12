@@ -116,3 +116,8 @@ export const GetTasks = (todolistId: string) => (dispatch: Dispatch) => {
         dispatch(SetTasks(tasks , todolistId))
     })
 }
+export const DeleteTask = (taskId: string, todolistId: string) => (dispatch: Dispatch) => {
+    todolistsAPI.deleteTask(todolistId, taskId).then( () => {
+        dispatch(RemoveTask(taskId,todolistId))
+    })
+}
