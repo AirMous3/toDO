@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {AddTodolist, RemoveTodolist, todolistId1, todolistId2} from "./todolists-Reducer";
+import {AddTodolist, RemoveTodolist, SetTodolists} from "./todolists-Reducer";
 import {TaskPriorities, TaskStatuses} from "./api/todolists-api";
 
 
@@ -30,117 +30,12 @@ type ActionsType =
     | ReturnType<typeof ChangeTaskTitle>
     | ReturnType<typeof AddTodolist>
     | ReturnType<typeof RemoveTodolist>
+    | ReturnType<typeof SetTodolists>
 
 //////////////////////////////////////
 
 let initialState: TasksStateType = {
-    [todolistId1]: [
-        {
-            id: v1(), title: "Redux", status: TaskStatuses.New, addedDate: '',
-            deadline: '', description: '', order: 0, startDate: '',
-            priority: TaskPriorities.Low, todoListId: todolistId1
-        },
-        {
-            id: v1(),
-            title: "React",
-            status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId1
-        },
-        {
-            id: v1(),
-            title: "HTML",
-            status: TaskStatuses.Completed,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId1
-        },
-        {
-            id: v1(),
-            title: "Js",
-            status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId1
-        },
-        {
-            id: v1(),
-            title: "CSS",
-            status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId1
-        },
-    ],
-    [todolistId2]: [
-        {
-            id: v1(), title: "Book", status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId2
-        },
-        {
-            id: v1(), title: "Beer", status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId2
-        },
-        {
-            id: v1(), title: "Milk", status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId2
-        },
-        {
-            id: v1(), title: "Water", status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId2
-        },
-        {
-            id: v1(), title: "Wine", status: TaskStatuses.New,
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            startDate: '',
-            priority: TaskPriorities.Low,
-            todoListId: todolistId2
-        },
-    ]
+
 }
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
@@ -178,7 +73,11 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             let copyState = {...state}
             delete copyState[action.id]
             return copyState
-
+        case "SET-TODOLISTS":{
+            let copyState = {...state}
+            action.todolists.forEach(t => copyState[t.id] = [])
+            return  copyState
+        }
         default:
             return state
     }
