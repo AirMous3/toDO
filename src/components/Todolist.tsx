@@ -3,7 +3,7 @@ import {Button} from "@mui/material";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/redux/store";
-import {AddTask, GetTasks, SetTasks, TaskType} from "../state/tasks-Reducer";
+import {AddTaskThunk, GetTasksThunk, TaskType} from "../state/tasks-Reducer";
 import {ChangeTodolistFilter, ChangeTodolistTitle, RemoveTodolist} from "../state/todolists-Reducer";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -26,7 +26,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         let dispatch = useDispatch()
         let tasksForTodolist = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.todolistId])
 
-        const addTask = useCallback((title: string) => dispatch(AddTask(title, props.todolistId)), [props.todolistId, dispatch])
+        const addTask = useCallback((title: string) => dispatch(AddTaskThunk(props.todolistId, title)), [props.todolistId, dispatch])
         const changeTodolistTitle = useCallback((newTitle: string) => dispatch(ChangeTodolistTitle(props.todolistId, newTitle)), [dispatch, props.todolistId])
         const removeTodolist = useCallback(() => dispatch(RemoveTodolist(props.todolistId)), [dispatch, props.todolistId])
 
@@ -35,7 +35,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         const onCompletedFilter = useCallback(() => dispatch(ChangeTodolistFilter(props.todolistId, "completed")), [props.todolistId, dispatch])
 
         useEffect(()=>{
-            dispatch(GetTasks(props.todolistId))
+            dispatch(GetTasksThunk(props.todolistId))
         },[])
 
         if (props.filter === "active") {

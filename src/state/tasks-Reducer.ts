@@ -47,17 +47,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)}
 
         case "ADD-TASK":
-            return {
-                ...state,
-                [action.todolistId]: [{
-                    id: v1(), title: action.title, status: TaskStatuses.New, addedDate: '',
-                    deadline: '',
-                    description: '',
-                    order: 0,
-                    startDate: '',
-                    priority: TaskPriorities.Low, todoListId: action.todolistId
-                }, ...state[action.todolistId]]
-            }
+            return {...state, [action.task.todoListId]: [action.task , ...state[action.task.todoListId]]}
         case "CHANGE-TASK-STATUS":
             return {
                 ...state, [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ?
@@ -91,7 +81,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
 }
 
 //////////////////////////////// AC
-export const AddTask = (title: string, todolistId: string) => ({type: "ADD-TASK", title, todolistId}) as const
+export const AddTask = ( task: TaskType) => ({type: "ADD-TASK", task}) as const
 export const RemoveTask = (taskId: string, todolistId: string) => ({type: "REMOVE-TASK", taskId, todolistId}) as const
 export const ChangeTaskStatus = (taskId: string, status: TaskStatuses, todolistId: string) => ({
     type: "CHANGE-TASK-STATUS",
@@ -110,14 +100,24 @@ export const SetTasks = (tasks: TaskType[], todolistId: string) => ({type: 'SET-
 
 ////////////////////////// THUNK
 
-export const GetTasks = (todolistId: string) => (dispatch: Dispatch) => {
+export const GetTasksThunk = (todolistId: string) => (dispatch: Dispatch) => {
     return todolistsAPI.getTasks(todolistId).then((res)=> {
         let tasks = res.data.items
         dispatch(SetTasks(tasks , todolistId))
     })
 }
-export const DeleteTask = (taskId: string, todolistId: string) => (dispatch: Dispatch) => {
+export const DeleteTaskThunk = (taskId: string, todolistId: string) => (dispatch: Dispatch) => {
     todolistsAPI.deleteTask(todolistId, taskId).then( () => {
         dispatch(RemoveTask(taskId,todolistId))
+    })
+}
+
+export const AddTaskThunk = (todolistId: string,title: string) => (dispatch: Dispatch) => {
+    todolistsAPI.createTask(todolistId,title).then((res)=>{
+        if(res.data.resultCode === 0){
+         let task = res.data.data.item
+            console.log(task)
+         dispatch(AddTask(task))
+        }
     })
 }
