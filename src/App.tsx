@@ -9,6 +9,7 @@ import {Header} from './components/AppBar';
 import {AppRootStateType} from "./state/redux/store";
 import {AddTodolist, GetTodolistsThunk, TodolistDomainType} from "./state/todolists-Reducer";
 import {Todolist} from "./components/Todolist";
+;
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
     let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     useEffect(()=>{
         dispatch(GetTodolistsThunk())
-    },[dispatch])
+    },[])
 
     return (
         <div className="App">
