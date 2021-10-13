@@ -7,7 +7,7 @@ import './App.css';
 import {AddItemForm,} from "./components/AddItemForm";
 import {Header} from './components/AppBar';
 import {AppRootStateType} from "./state/redux/store";
-import {AddTodolist, GetTodolistsThunk, TodolistDomainType} from "./state/todolists-Reducer";
+import {AddTodolist, CreateTodolistThunk, GetTodolistsThunk, TodolistDomainType} from "./state/todolists-Reducer";
 import {Todolist} from "./components/Todolist";
 ;
 
@@ -16,7 +16,7 @@ function App() {
 
     console.log('APP RENDERED')
     let dispatch = useDispatch()
-    const addNewTodolist = useCallback((title: string) => dispatch(AddTodolist(title)),[dispatch])
+    const addNewTodolist = useCallback((title: string) => dispatch(CreateTodolistThunk(title)),[dispatch])
     let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     useEffect(()=>{
         dispatch(GetTodolistsThunk())
