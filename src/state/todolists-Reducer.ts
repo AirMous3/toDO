@@ -71,9 +71,12 @@ export const CreateTodolistThunk = (title: string) => (dispatch: Dispatch) => {
 
 export const RemoveTodolistThunk = (todolistId: string) => (dispatch: Dispatch) => {
     todolistsAPI.deleteTodolist(todolistId).then(res=> {
-        if (res.data.resultCode === 0){
             dispatch(RemoveTodolist(todolistId))
-        }
     })
 }
 
+export const ChangeTodolistTitleThunk = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    todolistsAPI.updateTodolist(todolistId,title).then(res => {
+        dispatch(ChangeTodolistTitle(todolistId,title))
+    })
+}
