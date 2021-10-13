@@ -1,6 +1,5 @@
-import {v1} from "uuid";
 import {AddTodolist, RemoveTodolist, SetTodolists} from "./todolists-Reducer";
-import {TaskPriorities, TaskStatuses, todolistsAPI} from "./api/todolists-api";
+import {TaskPriorities, TaskStatuses, todolistsAPI, UpdateTaskType} from "./api/todolists-api";
 import {Dispatch} from "redux";
 
 
@@ -118,6 +117,14 @@ export const AddTaskThunk = (todolistId: string,title: string) => (dispatch: Dis
          let task = res.data.data.item
             console.log(task)
          dispatch(AddTask(task))
+        }
+    })
+}
+export const ChangeTaskTitleThunk = (todolistId: string, taskId: string, model: UpdateTaskType) => (dispatch: Dispatch) => {
+    todolistsAPI.updateTask(todolistId,taskId,model).then((res)=>{
+        if (res.data.resultCode === 0){
+            let taskTitle = res.data.data.item.title
+            dispatch(ChangeTaskTitle(taskId, taskTitle, todolistId))
         }
     })
 }

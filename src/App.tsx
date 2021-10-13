@@ -20,7 +20,7 @@ function App() {
     let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     useEffect(()=>{
         dispatch(GetTodolistsThunk())
-    },[])
+    },[dispatch])
 
     return (
         <div className="App">

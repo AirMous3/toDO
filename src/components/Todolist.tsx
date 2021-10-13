@@ -36,7 +36,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
 
         useEffect(()=>{
             dispatch(GetTasksThunk(props.todolistId))
-        },[])
+        },[dispatch])
 
         if (props.filter === "active") {
 
