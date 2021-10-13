@@ -1,6 +1,7 @@
 import {AddTodolist, RemoveTodolist, SetTodolists} from "./todolists-Reducer";
 import {TaskPriorities, TaskStatuses, todolistsAPI, UpdateTaskType} from "./api/todolists-api";
 import {Dispatch} from "redux";
+import {AppRootStateType} from "./redux/store";
 
 
 ///////////////////////// TYPE
@@ -120,11 +121,24 @@ export const AddTaskThunk = (todolistId: string,title: string) => (dispatch: Dis
         }
     })
 }
-export const ChangeTaskTitleThunk = (todolistId: string, taskId: string, model: UpdateTaskType) => (dispatch: Dispatch) => {
-    todolistsAPI.updateTask(todolistId,taskId,model).then((res)=>{
-        if (res.data.resultCode === 0){
-            let taskTitle = res.data.data.item.title
-            dispatch(ChangeTaskTitle(taskId, taskTitle, todolistId))
+export const ChangeTaskTitleThunk = (todolistId: string, taskId: string , title: string) => (dispatch: Dispatch, getState: ()=> AppRootStateType) => {
+    let currentTask = getState().tasks[todolistId].find((t)=> t.id === taskId) //Достаём нужную таску
+    if(currentTask){
+        let model: UpdateTaskType = {
+            title: title,
+            description: currentTask.description,
+            status: currentTask.status,
+            priority: currentTask.priority,
+            startDate: currentTask.startDate,
+            deadline: currentTask.deadline,
         }
-    })
+        todolistsAPI.updateTask(todolistId,taskId,model).then((res) => {
+            if (res.data.resultCode === 0){
+                let taskTitle = res.data.data.item.title
+                dispatch(ChangeTaskTitle(taskId, taskTitle, todolistId))
+            }
+        })
+    }
+
+
 }

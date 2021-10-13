@@ -19,15 +19,7 @@ export const Task = React.memo(({task, todolistId}: PropsTaskType) => {
         dispatch(ChangeTaskStatus(task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New, todolistId))   /*смена статуса таски ,  если чекд true - тогда Completed иначе New*/
     }
     const onChangeTaskTitle = useCallback((newTitle: string) => {
-        let model = {
-            title: newTitle,
-            description: task.description,
-            status: task.status,
-            priority: task.priority,
-            startDate: task.startDate,
-            deadline: task.deadline,
-        }
-        dispatch(ChangeTaskTitleThunk(todolistId,task.id, model)) // смена имени таски
+        dispatch(ChangeTaskTitleThunk(todolistId,task.id, newTitle)) // смена имени таски
     }, [dispatch, task.id, todolistId])
 
 
