@@ -7,12 +7,14 @@ import './App.css';
 import {AddItemForm,} from "./components/AddItemForm";
 import {Header} from './components/AppBar';
 import {AppRootStateType} from "./state/redux/store";
-import {AddTodolist, CreateTodolistThunk, GetTodolistsThunk, TodolistDomainType} from "./state/todolists-Reducer";
+import {CreateTodolistThunk, GetTodolistsThunk, TodolistDomainType} from "./state/todolists-Reducer";
 import {Todolist} from "./components/Todolist";
-;
+import LinearBuffer from "./components/Preloader";
+import {RequestStatusType} from "./state/app-Reducer";
 
 
 function App() {
+    const status = useSelector<AppRootStateType, RequestStatusType>((state)=> state.app.status)
 
     console.log('APP RENDERED')
     let dispatch = useDispatch()
@@ -25,7 +27,8 @@ function App() {
     return (
         <div className="App">
             <Header />
-            <Container>
+            {status === 'loading' && <LinearBuffer /> }
+                <Container>
 
                 <Grid container style={{ padding: "20px" }}>
                     <AddItemForm addItemCallBack={addNewTodolist} />
@@ -46,6 +49,7 @@ function App() {
                     }
                 </Grid>
             </Container>
+
         </div>
     );
 }

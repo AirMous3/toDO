@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {todolistsAPI} from "./api/todolists-api";
 import {Dispatch} from "redux";
+import {changeAppStatus} from "./app-Reducer";
 
 
 
@@ -56,9 +57,11 @@ export const SetTodolists = (todolists: Array<TodolistType>) => ({type: 'SET-TOD
 ////////////////////// THUNK
 
 export const GetTodolistsThunk = () => (dispatch: Dispatch) => {
+    dispatch(changeAppStatus('loading'))
     return todolistsAPI.getTodolists()
         .then((res)=>{
-        dispatch(SetTodolists(res.data))
+            dispatch(SetTodolists(res.data))
+            dispatch(changeAppStatus('succeeded'))
     })
 }
 
