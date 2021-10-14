@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import {todolistsAPI} from "./api/todolists-api";
 import {Dispatch} from "redux";
-import {changeAppStatus} from "./app-Reducer";
+import {changeAppStatus, setAppError} from "./app-Reducer";
 
 
 
@@ -68,9 +68,19 @@ export const GetTodolistsThunk = () => (dispatch: Dispatch) => {
 export const CreateTodolistThunk = (title: string) => (dispatch: Dispatch) => {
     dispatch(changeAppStatus('loading'))
     todolistsAPI.createTodolist(title).then( (res) => {
-        let payload: TodolistType = res.data.data.item
-        dispatch(AddTodolist(title,payload))
-        dispatch(changeAppStatus('succeeded'))
+       if(res.data.resultCode === 0 ) {
+           let payload: TodolistType = res.data.data.item
+           dispatch(AddTodolist(title,payload))
+           dispatch(changeAppStatus('succeeded'))
+       } else {
+           if(res.data.messages.length > 0) {
+               dispatch(setAppError(res.data.messages[0]))
+               dispatch(changeAppStatus('succeeded'))
+           } else {
+               dispatch(setAppError('some error'))
+               dispatch(changeAppStatus('succeeded'))
+           }
+       }
     })
 }
 

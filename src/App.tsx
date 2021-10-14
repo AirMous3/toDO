@@ -11,6 +11,7 @@ import {CreateTodolistThunk, GetTodolistsThunk, TodolistDomainType} from "./stat
 import {Todolist} from "./components/Todolist";
 import LinearBuffer from "./components/Preloader";
 import {RequestStatusType} from "./state/app-Reducer";
+import ErrorBar from "./components/ErrorBar/ErrorBar";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
     return (
         <div className="App">
             <Header />
+            <ErrorBar />
             {status === 'loading' && <LinearBuffer /> }
                 <Container>
 

@@ -2,7 +2,7 @@ import {AddTodolist, RemoveTodolist, SetTodolists} from "./todolists-Reducer";
 import {TaskPriorities, TaskStatuses, todolistsAPI, UpdateTaskType} from "./api/todolists-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./redux/store";
-import {changeAppStatus} from "./app-Reducer";
+import {changeAppStatus, setAppError} from "./app-Reducer";
 
 
 ///////////////////////// TYPE
@@ -125,6 +125,14 @@ export const AddTaskThunk = (todolistId: string, title: string) => (dispatch: Di
             console.log(task)
             dispatch(AddTask(task))
             dispatch(changeAppStatus('succeeded'))
+        } else {
+            if(res.data.messages.length > 0){
+                dispatch(setAppError(res.data.messages[0]))
+                dispatch(changeAppStatus('succeeded'))
+            } else {
+                dispatch(setAppError('some error'))
+                dispatch(changeAppStatus('succeeded'))
+            }
         }
     })
 }
