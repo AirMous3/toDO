@@ -32,7 +32,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
         case "REMOVE-TODOLIST":
             return state.filter(td => td.id !== action.id)
         case "ADD-TODOLIST":
-            return [...state, {...action.payload, filter: "all"}]
+            return [{...action.payload, filter: "all"},...state ]
         case "CHANGE-TODOLIST-TITLE":
             return state.map(td => td.id === action.id ? {...td, title: action.title } : td)
         case "CHANGE-TODOLIST-FILTER":
@@ -66,20 +66,26 @@ export const GetTodolistsThunk = () => (dispatch: Dispatch) => {
 }
 
 export const CreateTodolistThunk = (title: string) => (dispatch: Dispatch) => {
+    dispatch(changeAppStatus('loading'))
     todolistsAPI.createTodolist(title).then( (res) => {
         let payload: TodolistType = res.data.data.item
         dispatch(AddTodolist(title,payload))
+        dispatch(changeAppStatus('succeeded'))
     })
 }
 
 export const RemoveTodolistThunk = (todolistId: string) => (dispatch: Dispatch) => {
-    todolistsAPI.deleteTodolist(todolistId).then(res=> {
+    dispatch(changeAppStatus('loading'))
+    todolistsAPI.deleteTodolist(todolistId).then(()=> {
             dispatch(RemoveTodolist(todolistId))
+            dispatch(changeAppStatus('succeeded'))
     })
 }
 
 export const ChangeTodolistTitleThunk = (todolistId: string, title: string) => (dispatch: Dispatch) => {
-    todolistsAPI.updateTodolist(todolistId,title).then(res => {
+    dispatch(changeAppStatus('loading'))
+    todolistsAPI.updateTodolist(todolistId,title).then(() => {
         dispatch(ChangeTodolistTitle(todolistId,title))
+        dispatch(changeAppStatus('succeeded'))
     })
 }

@@ -2,6 +2,7 @@ import {AddTodolist, RemoveTodolist, SetTodolists} from "./todolists-Reducer";
 import {TaskPriorities, TaskStatuses, todolistsAPI, UpdateTaskType} from "./api/todolists-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./redux/store";
+import {changeAppStatus} from "./app-Reducer";
 
 
 ///////////////////////// TYPE
@@ -101,29 +102,36 @@ export const SetTasks = (tasks: TaskType[], todolistId: string) => ({type: 'SET-
 ////////////////////////// THUNK
 
 export const GetTasksThunk = (todolistId: string) => (dispatch: Dispatch) => {
+    dispatch(changeAppStatus('loading'))
     return todolistsAPI.getTasks(todolistId).then((res)=> {
         let tasks = res.data.items
         dispatch(SetTasks(tasks , todolistId))
+        dispatch(changeAppStatus('succeeded'))
     })
 }
 export const DeleteTaskThunk = (taskId: string, todolistId: string) => (dispatch: Dispatch) => {
+    dispatch(changeAppStatus('loading'))
     todolistsAPI.deleteTask(todolistId, taskId).then( () => {
         dispatch(RemoveTask(taskId,todolistId))
+        dispatch(changeAppStatus('succeeded'))
     })
 }
 
-export const AddTaskThunk = (todolistId: string,title: string) => (dispatch: Dispatch) => {
-    todolistsAPI.createTask(todolistId,title).then((res)=>{
-        if(res.data.resultCode === 0){
-         let task = res.data.data.item
+export const AddTaskThunk = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    dispatch(changeAppStatus('loading'))
+    todolistsAPI.createTask(todolistId, title).then((res) => {
+        if (res.data.resultCode === 0) {
+            let task = res.data.data.item
             console.log(task)
-         dispatch(AddTask(task))
+            dispatch(AddTask(task))
+            dispatch(changeAppStatus('succeeded'))
         }
     })
 }
 export const ChangeTaskTitleThunk = (todolistId: string, taskId: string , title: string) => (dispatch: Dispatch, getState: ()=> AppRootStateType) => {
+    dispatch(changeAppStatus('loading'))
     let currentTask = getState().tasks[todolistId].find((t)=> t.id === taskId) //Достаём нужную таску
-    if(currentTask){
+    if (currentTask){
         let model: UpdateTaskType = {
             title: title,
             description: currentTask.description,
@@ -136,6 +144,7 @@ export const ChangeTaskTitleThunk = (todolistId: string, taskId: string , title:
             if (res.data.resultCode === 0){
                 let taskTitle = res.data.data.item.title
                 dispatch(ChangeTaskTitle(taskId, taskTitle, todolistId))
+                dispatch(changeAppStatus('succeeded'))
             }
         })
     }
