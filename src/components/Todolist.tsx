@@ -10,17 +10,19 @@ import {EditableSpan} from "./EditableSpan";
 import s from './Todolist.module.css';
 import {Task} from "./Task";
 import {TaskStatuses} from "../state/api/todolists-api";
+import {RequestStatusType} from "../state/app-Reducer";
 
 
 type TodolistPropsType = {
     todolistId: string
     title: string
     filter: string
+    entityStatus: RequestStatusType
 
 }
 
 
-export const Todolist = React.memo(({todolistId, title,filter}:TodolistPropsType) => {
+export const Todolist = React.memo(({todolistId, title, filter, entityStatus}: TodolistPropsType) => {
         console.log('TODOLIST')
 
         let dispatch = useDispatch()
@@ -34,9 +36,9 @@ export const Todolist = React.memo(({todolistId, title,filter}:TodolistPropsType
         const onActiveFilter = useCallback(() => dispatch(ChangeTodolistFilter(todolistId, "active")), [todolistId, dispatch])
         const onCompletedFilter = useCallback(() => dispatch(ChangeTodolistFilter(todolistId, "completed")), [todolistId, dispatch])
 
-        useEffect(()=>{
+        useEffect(() => {
             dispatch(GetTasksThunk(todolistId))
-        },[dispatch,todolistId])
+        }, [dispatch, todolistId])
 
         if (filter === "active") {
 
@@ -57,7 +59,7 @@ export const Todolist = React.memo(({todolistId, title,filter}:TodolistPropsType
                         <EditableSpan title={title} onChangeCallBack={changeTodolistTitle}/>
                     </div>
                     <div className={s.deleteTodolistIcon}>
-                        <Button size={"small"} onClick={removeTodolist}>
+                        <Button size={"small"} onClick={removeTodolist} disabled={entityStatus === 'loading'}>
                             <DeleteOutlined/>
                         </Button>
                     </div>

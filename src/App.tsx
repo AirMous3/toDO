@@ -42,7 +42,7 @@ function App() {
 
                             return <Grid item>
                                 <Paper style={{ padding: "20px" }}>
-                                    <Todolist key={tl.id} todolistId={tl.id} title={tl.title} filter={tl.filter}
+                                    <Todolist key={tl.id} todolistId={tl.id} title={tl.title} filter={tl.filter} entityStatus={tl.entityStatus}
 
                                     />
                                 </Paper>
