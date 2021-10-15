@@ -6,6 +6,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type PropsType = {
     addItemCallBack: (title: string) => void
+    disabled?: boolean
 
 }
 
@@ -39,7 +40,7 @@ export const AddItemForm = React.memo((props: PropsType) => {
         <TextField helperText={error} value={title} label={"Type"} onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    error={!!error}/>
-        <Button style={{marginRight: '-10px'}} size={"large"} variant={"text"} onClick={addTask}>
+        <Button style={{marginRight: '-10px'}} size={"large"} variant={"text"} onClick={addTask} disabled={props.disabled}>
             <LibraryAddOutlined/>
         </Button>
     </div>)

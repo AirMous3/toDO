@@ -64,7 +64,7 @@ export const Todolist = React.memo(({todolistId, title, filter, entityStatus}: T
                         </Button>
                     </div>
                 </h3>
-                <AddItemForm addItemCallBack={addTask}/>
+                <AddItemForm addItemCallBack={addTask} disabled={entityStatus === 'loading'}/>
                 <div>
                     {tasksForTodolist.map(t =>
                         <Task task={t} todolistId={todolistId} key={t.id}/>

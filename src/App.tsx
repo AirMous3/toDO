@@ -33,7 +33,7 @@ function App() {
                 <Container>
 
                 <Grid container style={{ padding: "20px" }}>
-                    <AddItemForm addItemCallBack={addNewTodolist} />
+                    <AddItemForm addItemCallBack={addNewTodolist} disabled={status === 'loading'} />
                 </Grid>
                 <Grid container spacing={1}>
 
