@@ -3,7 +3,7 @@ import {Button} from "@mui/material";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/redux/store";
-import {AddTaskThunk, GetTasksThunk, TaskType} from "../../state/tasks-Reducer";
+import {AddTaskThunk, GetTasksThunk, TaskEntityType, TaskType} from "../../state/tasks-Reducer";
 import {ChangeTodolistFilter, ChangeTodolistTitleThunk, RemoveTodolistThunk} from "../../state/todolists-Reducer";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
@@ -26,7 +26,7 @@ export const Todolist = React.memo(({todolistId, title, filter, entityStatus}: T
         console.log('TODOLIST')
 
         let dispatch = useDispatch()
-        let tasksForTodolist = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todolistId])
+        let tasksForTodolist = useSelector<AppRootStateType, Array<TaskEntityType>>(state => state.tasks[todolistId])
 
         const addTask = useCallback((title: string) => dispatch(AddTaskThunk(todolistId, title)), [todolistId, dispatch])
         const changeTodolistTitle = useCallback((newTitle: string) => dispatch(ChangeTodolistTitleThunk(todolistId, newTitle)), [dispatch, todolistId])
@@ -67,7 +67,7 @@ export const Todolist = React.memo(({todolistId, title, filter, entityStatus}: T
                 <AddItemForm addItemCallBack={addTask} disabled={entityStatus === 'loading'}/>
                 <div>
                     {tasksForTodolist.map(t =>
-                        <Task  task={t} todolistId={todolistId} key={t.id}/>
+                        <Task  task={t} todolistId={todolistId} key={t.id} entityStatus={t.entityStatus}/>
                     )}
                 </div>
                 <div className={s.status}>
