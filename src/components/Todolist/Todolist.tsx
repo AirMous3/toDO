@@ -56,7 +56,7 @@ export const Todolist = React.memo(({todolistId, title, filter, entityStatus}: T
 
                 <h3 className={s.span}>
                     <div>
-                        <EditableSpan title={title} onChangeCallBack={changeTodolistTitle}/>
+                        <EditableSpan entityStatus={entityStatus} title={title} onChangeCallBack={changeTodolistTitle}/>
                     </div>
                     <div className={s.deleteTodolistIcon}>
                         <Button size={"small"} onClick={removeTodolist} disabled={entityStatus === 'loading'}>

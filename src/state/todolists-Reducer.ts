@@ -97,8 +97,10 @@ export const RemoveTodolistThunk = (todolistId: string) => (dispatch: Dispatch) 
 
 export const ChangeTodolistTitleThunk = (todolistId: string, title: string) => (dispatch: Dispatch) => {
     dispatch(changeAppStatus('loading'))
+    dispatch(changeTodolistEntityStatus(todolistId, 'loading'))
     todolistsAPI.updateTodolist(todolistId,title).then(() => {
         dispatch(ChangeTodolistTitle(todolistId,title))
         dispatch(changeAppStatus('succeeded'))
+        dispatch(changeTodolistEntityStatus(todolistId, 'succeeded'))
     })
 }
