@@ -32,10 +32,10 @@ export const Task = React.memo(({task, todolistId,entityStatus}: PropsTaskType) 
         <div>
             <Checkbox disabled={ entityStatus === 'loading'} size={'small'} checked={task.status === TaskStatuses.Completed} onChange={onIsDoneHandler}/> {/*Если ТаскСтатус = Комплетед, тогда значение Checked будет true */}
 
-            <EditableSpan title={task.title} onChangeCallBack={onChangeTaskTitle}/>
+            <EditableSpan entityTaskStatus={entityStatus} title={task.title} onChangeCallBack={onChangeTaskTitle}/>
         </div>
         <div>
-            <Button size={"small"} onClick={onDeleteHandler}>
+            <Button disabled={ entityStatus === 'loading'}  size={"small"} onClick={onDeleteHandler}>
                 <HighlightOffOutlined/>
             </Button>
         </div>

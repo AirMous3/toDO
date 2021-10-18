@@ -8,6 +8,7 @@ type EditableSpanPropsType = {
     title: string
     onChangeCallBack: (title: string) => void
     entityStatus?: RequestStatusType
+    entityTaskStatus?: RequestStatusType
 }
 
 export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
@@ -29,7 +30,7 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
     }
 
     return (editMode ?
-        <TextField disabled={props.entityStatus === 'loading'} onBlur={onBlurEffect} autoFocus onDoubleClick={changeEditMode} onChange={onChangeTitleHandler} value={title} />
+        <TextField disabled={props.entityStatus === 'loading' || props.entityTaskStatus === 'loading'} onBlur={onBlurEffect} autoFocus onDoubleClick={changeEditMode} onChange={onChangeTitleHandler} value={title} />
         : <span onDoubleClick={changeEditMode}>{props.title}</span>
     )
 })

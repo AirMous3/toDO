@@ -102,6 +102,7 @@ export const GetTasksThunk = (todolistId: string) => (dispatch: Dispatch) => {
 }
 export const DeleteTaskThunk = (taskId: string, todolistId: string) => (dispatch: Dispatch) => {
     dispatch(changeAppStatus('loading'))
+    dispatch(ChangeTaskEntityStatus(todolistId,taskId, 'loading'))
     todolistsAPI.deleteTask(todolistId, taskId).then(() => {
         dispatch(RemoveTask(taskId, todolistId))
         dispatch(changeAppStatus('succeeded'))
