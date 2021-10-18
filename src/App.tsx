@@ -4,12 +4,12 @@ import Paper from '@mui/material/Paper/Paper';
 import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import './App.css';
-import {AddItemForm,} from "./components/AddItemForm";
-import {Header} from './components/AppBar';
+import {AddItemForm,} from "./components/AddItemForm/AddItemForm";
+import {Header} from './components/AppBar/AppBar';
 import {AppRootStateType} from "./state/redux/store";
 import {CreateTodolistThunk, GetTodolistsThunk, TodolistDomainType} from "./state/todolists-Reducer";
-import {Todolist} from "./components/Todolist";
-import LinearBuffer from "./components/Preloader";
+import {Todolist} from "./components/Todolist/Todolist";
+import LinearBuffer from "./components/temp/Preloader";
 import {RequestStatusType} from "./state/app-Reducer";
 import ErrorBar from "./components/ErrorBar/ErrorBar";
 

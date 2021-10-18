@@ -1,11 +1,11 @@
 import React, {ChangeEvent, useCallback} from "react";
-import {DeleteTaskThunk, TaskType, UpdateTaskThunk} from "../state/tasks-Reducer";
-import s from "./Todolist.module.css";
+import {DeleteTaskThunk, TaskType, UpdateTaskThunk} from "../../state/tasks-Reducer";
+import s from "../Todolist/Todolist.module.css";
 import {Button, Checkbox} from "@mui/material";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {HighlightOffOutlined} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {TaskStatuses} from "../state/api/todolists-api";
+import {TaskStatuses} from "../../state/api/todolists-api";
 
 type PropsTaskType = {
     task: TaskType
