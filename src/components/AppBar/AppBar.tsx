@@ -5,23 +5,26 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
+import {NavLink} from "react-router-dom";
 
 export const Header = () => {
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{flexGrow: 1}}>
             <AppBar position="static" color="transparent">
-                <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
                     <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        sx={{mr: 2}}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
 
-                    <Button href={'/login'} color="inherit">Login</Button>
+                    <Button color="inherit">
+                        <NavLink style={{textDecoration: 'none'}} to={'/login'}> Login</NavLink>
+                    </Button>
                 </Toolbar>
             </AppBar>
         </Box>
