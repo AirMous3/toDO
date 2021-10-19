@@ -21,7 +21,7 @@ export const Header = () => {
                         <MenuIcon />
                     </IconButton>
 
-                    <Button color="inherit">Login</Button>
+                    <Button href={'/login'} color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
         </Box>

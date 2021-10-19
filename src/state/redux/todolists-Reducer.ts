@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {todolistsAPI} from "./api/todolists-api";
+import {todolistsAPI} from "../api/todolists-api";
 import {Dispatch} from "redux";
 import {changeAppStatus, RequestStatusType, setAppError} from "./app-Reducer";
 

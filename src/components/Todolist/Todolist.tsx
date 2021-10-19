@@ -3,14 +3,14 @@ import {Button} from "@mui/material";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/redux/store";
-import {AddTaskThunk, GetTasksThunk, TaskEntityType, TaskType} from "../../state/tasks-Reducer";
-import {ChangeTodolistFilter, ChangeTodolistTitleThunk, RemoveTodolistThunk} from "../../state/todolists-Reducer";
+import {AddTaskThunk, GetTasksThunk, TaskEntityType, TaskType} from "../../state/redux/tasks-Reducer";
+import {ChangeTodolistFilter, ChangeTodolistTitleThunk, RemoveTodolistThunk} from "../../state/redux/todolists-Reducer";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import s from './Todolist.module.css';
 import {Task} from "../Task/Task";
 import {TaskStatuses} from "../../state/api/todolists-api";
-import {RequestStatusType} from "../../state/app-Reducer";
+import {RequestStatusType} from "../../state/redux/app-Reducer";
 
 
 type TodolistPropsType = {

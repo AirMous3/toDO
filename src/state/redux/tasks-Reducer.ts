@@ -1,7 +1,7 @@
 import {AddTodolist, changeTodolistEntityStatus, RemoveTodolist, SetTodolists} from "./todolists-Reducer";
-import {TaskPriorities, TaskStatuses, todolistsAPI, UpdateTaskType} from "./api/todolists-api";
+import {TaskPriorities, TaskStatuses, todolistsAPI, UpdateTaskType} from "../api/todolists-api";
 import {Dispatch} from "redux";
-import {AppRootStateType} from "./redux/store";
+import {AppRootStateType} from "./store";
 import {changeAppStatus, RequestStatusType, setAppError} from "./app-Reducer";
 
 
@@ -125,8 +125,8 @@ export const AddTaskThunk = (todolistId: string, title: string) => (dispatch: Di
                 dispatch(changeTodolistEntityStatus(todolistId, 'idle'))
             } else {
                 dispatch(setAppError('some error'))
-                dispatch(changeAppStatus('succeeded'))
                 dispatch(changeTodolistEntityStatus(todolistId, 'idle'))
+                dispatch(changeAppStatus('failed'))
             }
         }
     })
@@ -153,7 +153,14 @@ export const UpdateTaskThunk = (todolistId: string, taskId: string, domainModel:
                     dispatch(UpdateTask(todolistId, taskId, model))
                     dispatch(changeAppStatus('succeeded'))
                     dispatch(ChangeTaskEntityStatus(todolistId,taskId, 'succeeded'))
+                } else {
+                    dispatch(setAppError(res.data.messages[0]))
+                    dispatch(changeAppStatus('failed'))
+                    dispatch(ChangeTaskEntityStatus(todolistId,taskId, 'succeeded'))
                 }
+            }).catch(error => {
+                dispatch(setAppError(error.message))
+                dispatch(changeAppStatus('failed'))
             })
 
         } else {
