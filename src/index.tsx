@@ -8,7 +8,7 @@ import {store} from "./state/redux/store";
 import {HashRouter} from "react-router-dom";
 
 ReactDOM.render(
-    <HashRouter basename={'toDO'}>
+    <HashRouter>
         <Provider store={store}>
             <App/>
         </Provider>
