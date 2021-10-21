@@ -28,8 +28,8 @@ export const Login = () => {
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: '',
+            email: 'airmouselol@gmail.com',
+            password: '1q2w3e4r',
             rememberMe: false
         },
         onSubmit: values => {
@@ -71,15 +71,15 @@ export const Login = () => {
                             </a>
                         </p>
                         <p>or use common test account credentials:</p>
-                        <p>Email: free@samuraijs.com</p>
-                        <p>Password: free</p>
+                        <p>Email: airmouselol@gmail.com</p>
+                        <p>Password: 1q2w3e4r</p>
                     </FormLabel>
                     <FormGroup>
-                        <TextField {...formik.getFieldProps('email')} label="Email" margin="normal"/>
+                        <TextField {...formik.getFieldProps('email')}  label="Email" margin="normal"/>
                         {formik.touched.email && formik.errors.email ?
                             <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
 
-                        <TextField {...formik.getFieldProps('password')} type="password" label="Password"
+                        <TextField {...formik.getFieldProps('password')}  type="password" label="Password"
                                    margin="normal"/>
                         {formik.touched.password && formik.errors.password ?
                             <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
