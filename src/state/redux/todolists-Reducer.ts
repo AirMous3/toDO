@@ -4,7 +4,6 @@ import {Dispatch} from "redux";
 import {changeAppStatus, RequestStatusType, setAppError} from "./app-Reducer";
 
 
-
 export const todolistId1 = v1()
 export const todolistId2 = v1()
 
@@ -60,10 +59,14 @@ export const changeTodolistEntityStatus = (todolistId: string, entityStatus: Req
 
 export const GetTodolistsThunk = () => (dispatch: Dispatch) => {
     dispatch(changeAppStatus('loading'))
-    return todolistsAPI.getTodolists()
+    todolistsAPI.getTodolists()
         .then((res)=>{
             dispatch(SetTodolists(res.data))
             dispatch(changeAppStatus('succeeded'))
+    }).catch((error) => {
+        setAppError(error.message)
+        console.log(error.message)
+        dispatch(changeAppStatus('failed'))
     })
 }
 

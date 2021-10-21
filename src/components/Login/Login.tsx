@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -8,6 +8,11 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {loginThunk} from "../../state/redux/loggin-Reducer";
+import {AppRootStateType} from "../../state/redux/store";
+import {Redirect} from "react-router-dom";
+import ErrorBar from "../ErrorBar/ErrorBar";
 
 
 type FormikErrorType = {
@@ -19,6 +24,8 @@ type FormikErrorType = {
 
 export const Login = () => {
 
+    const isLoggedIn = useSelector((state: AppRootStateType) => state.loggin.isLogged)
+    const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -26,6 +33,7 @@ export const Login = () => {
             rememberMe: false
         },
         onSubmit: values => {
+            dispatch(loginThunk(values))
             formik.resetForm({
                 values: {email: '', password: '', rememberMe: false},
             });
@@ -46,6 +54,10 @@ export const Login = () => {
         },
 
     })
+
+    if (isLoggedIn) {
+        return <Redirect to={'/'}/>
+    }
 
 
     return <form onSubmit={formik.handleSubmit}>

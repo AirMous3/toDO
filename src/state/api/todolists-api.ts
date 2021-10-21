@@ -30,14 +30,36 @@ export const todolistsAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<{title: string}, AxiosResponse<ResponseType<{item: TaskType}>>>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks`, {title})
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskType) {
-        return instance.put<UpdateTaskType,AxiosResponse<ResponseType<{item: TaskType}>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instance.put<UpdateTaskType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    }
+}
+
+export const authAPI = {
+    login(payload: LoginPayloadType) {
+        return instance.post<LoginPayloadType, AxiosResponse<ResponseType<{ userId: number }>>>(`auth/login`, payload)
+    },
+    authMe() {
+        return instance.get<ResponseType<MeResponseType>>(`auth/me`)
     }
 }
 
 ///////////////////////////// TYPE
+
+export type MeResponseType = {
+    id: number
+    email: string
+    login: string
+}
+
+export type LoginPayloadType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
+
 type TodolistType = {
     addedDate: string
     id: string
@@ -66,7 +88,6 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4
 }
-
 
 
 export type UpdateTaskType = {

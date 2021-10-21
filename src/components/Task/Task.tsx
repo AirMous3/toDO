@@ -13,29 +13,32 @@ type PropsTaskType = {
     todolistId: string
     entityStatus: RequestStatusType
 }
-export const Task = React.memo(({task, todolistId,entityStatus}: PropsTaskType) => {
+export const Task = React.memo(({task, todolistId, entityStatus}: PropsTaskType) => {
 
     let dispatch = useDispatch()
-    const onDeleteHandler = () => dispatch(DeleteTaskThunk(task.id , todolistId)) // удаление таски
+    const onDeleteHandler = () => dispatch(DeleteTaskThunk(task.id, todolistId)) // удаление таски
     const onIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(UpdateTaskThunk(task.todoListId, task.id, {status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New }))  /*смена статуса таски ,  если чекд true - тогда Completed иначе New*/
+        dispatch(UpdateTaskThunk(task.todoListId, task.id, {status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}))  /*смена статуса таски ,  если чекд true - тогда Completed иначе New*/
 
     }
     const onChangeTaskTitle = useCallback((newTitle: string) => {
-        dispatch(UpdateTaskThunk(todolistId,task.id, {title: newTitle})) // смена имени таски
+        dispatch(UpdateTaskThunk(todolistId, task.id, {title: newTitle})) // смена имени таски
     }, [dispatch, task.id, todolistId])
 
 
-    return <div className={`${s.tasks} ${task.status === TaskStatuses.Completed ? s.isDone : ''}`} key={task.id}>  {/*Если ТаскСтатус = Комплетед - тогда навешивается стиль, иначе пустая строка*/}
+    return <div className={`${s.tasks} ${task.status === TaskStatuses.Completed ? s.isDone : ''}`}
+                key={task.id}>  {/*Если ТаскСтатус = Комплетед - тогда навешивается стиль, иначе пустая строка*/}
 
 
         <div>
-            <Checkbox disabled={ entityStatus === 'loading'} size={'small'} checked={task.status === TaskStatuses.Completed} onChange={onIsDoneHandler}/> {/*Если ТаскСтатус = Комплетед, тогда значение Checked будет true */}
+            <Checkbox disabled={entityStatus === 'loading'} size={'small'}
+                      checked={task.status === TaskStatuses.Completed}
+                      onChange={onIsDoneHandler}/> {/*Если ТаскСтатус = Комплетед, тогда значение Checked будет true */}
 
             <EditableSpan entityTaskStatus={entityStatus} title={task.title} onChangeCallBack={onChangeTaskTitle}/>
         </div>
         <div>
-            <Button disabled={ entityStatus === 'loading'}  size={"small"} onClick={onDeleteHandler}>
+            <Button disabled={entityStatus === 'loading'} size={"small"} onClick={onDeleteHandler}>
                 <HighlightOffOutlined/>
             </Button>
         </div>
