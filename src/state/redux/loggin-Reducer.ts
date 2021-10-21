@@ -37,3 +37,16 @@ export const loginThunk = (payload: LoginPayloadType) => (dispatch: Dispatch) =>
         }
     })
 }
+
+export const logOutThunk = () => (dispatch: Dispatch) => {
+    dispatch(changeAppStatus('loading'))
+    authAPI.logOut().then(res => {
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedIn(false))
+            dispatch(changeAppStatus('succeeded'))
+        } else {
+            dispatch(setAppError(res.data.messages[0]))
+            dispatch(changeAppStatus('failed'))
+        }
+    })
+}

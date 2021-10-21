@@ -5,9 +5,16 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
-import {NavLink} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../../state/redux/store";
+import {logOutThunk} from "../../state/redux/loggin-Reducer";
 
 export const Header = () => {
+
+    const isLoggedIn = useSelector((state: AppRootStateType) => state.loggin.isLogged)
+    const dispatch = useDispatch()
+    const logOutHandler = () => dispatch(logOutThunk())
+
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static" color="transparent">
@@ -21,10 +28,8 @@ export const Header = () => {
                     >
                         <MenuIcon/>
                     </IconButton>
-
-                    <Button color="inherit">
-                        <NavLink style={{textDecoration: 'none'}} to={'/login'}> Login</NavLink>
-                    </Button>
+                    {isLoggedIn ? <Button onClick={() => logOutHandler()} color="inherit">logOut</Button> :
+                        <Button href={'/login'} color="inherit">login</Button>}
                 </Toolbar>
             </AppBar>
         </Box>
