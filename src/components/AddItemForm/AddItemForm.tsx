@@ -37,7 +37,7 @@ export const AddItemForm = React.memo((props: PropsType) => {
     }
 
     return (<div style={{padding: "10px"}}>
-        <TextField helperText={error} value={title} label={"Type"} onChange={onChangeHandler}
+        <TextField style={{minWidth: '300px'}} helperText={error} value={title} label={"Type"} onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    error={!!error}/>
         <Button style={{marginRight: '-10px'}} size={"large"} variant={"text"} onClick={addTask} disabled={props.disabled}>

@@ -3,7 +3,6 @@ import Paper from "@mui/material/Paper/Paper";
 import {Todolist} from "../Todolist/Todolist";
 import React, {useCallback, useEffect} from "react";
 import {CreateTodolistThunk, GetTodolistsThunk, TodolistDomainType} from "../../state/redux/todolists-Reducer";
-import Container from "@mui/material/Container/Container";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/redux/store";
@@ -27,24 +26,24 @@ export const TodolistsList = (props: PropsType) => {
     }
 
     return <>
-        <Container>
-            <Grid container style={{padding: "20px"}}>
-                <AddItemForm addItemCallBack={addNewTodolist} disabled={props.status === 'loading'}/>
-            </Grid>
-            <Grid container spacing={1}>
-                {todolists.map((tl) => {
 
-                    return <Grid item>
-                        <Paper style={{padding: "20px"}}>
-                            <Todolist key={tl.id} todolistId={tl.id} title={tl.title} filter={tl.filter}
-                                      entityStatus={tl.entityStatus}
+        <Grid container style={{padding: "20px"}} justifyContent={'center'}>
+            <AddItemForm addItemCallBack={addNewTodolist} disabled={props.status === 'loading'}/>
+        </Grid>
+        <Grid container spacing={2} justifyContent={'center'}>
+            {todolists.map((tl) => {
 
-                            />
-                        </Paper>
-                    </Grid>
-                })}
-            </Grid>
-        </Container>
+                return <Grid item>
+                    <Paper style={{padding: "20px"}}>
+                        <Todolist key={tl.id} todolistId={tl.id} title={tl.title} filter={tl.filter}
+                                  entityStatus={tl.entityStatus}
+
+                        />
+                    </Paper>
+                </Grid>
+            })}
+        </Grid>
+
 
     </>
 }

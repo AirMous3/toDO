@@ -31,7 +31,7 @@ function App() {
             <Header/>
             <ErrorBar/>
             {status === 'loading' && <LinearBuffer/>}
-            <Container fixed>
+            <Container maxWidth="xl">
                 <Switch>
                     <Route exact path={'/'} render={() => <TodolistsList status={status}/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>

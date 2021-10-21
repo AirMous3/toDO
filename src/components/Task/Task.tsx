@@ -29,13 +29,14 @@ export const Task = React.memo(({task, todolistId, entityStatus}: PropsTaskType)
     return <div className={`${s.tasks} ${task.status === TaskStatuses.Completed ? s.isDone : ''}`}
                 key={task.id}>  {/*Если ТаскСтатус = Комплетед - тогда навешивается стиль, иначе пустая строка*/}
 
+        <Checkbox disabled={entityStatus === 'loading'} size={'small'}
+                  checked={task.status === TaskStatuses.Completed}
+                  onChange={onIsDoneHandler}/> {/*Если ТаскСтатус = Комплетед, тогда значение Checked будет true */}
+        <div style={{maxWidth: '250px', minWidth: '250px'}}>
 
-        <div>
-            <Checkbox disabled={entityStatus === 'loading'} size={'small'}
-                      checked={task.status === TaskStatuses.Completed}
-                      onChange={onIsDoneHandler}/> {/*Если ТаскСтатус = Комплетед, тогда значение Checked будет true */}
 
             <EditableSpan entityTaskStatus={entityStatus} title={task.title} onChangeCallBack={onChangeTaskTitle}/>
+
         </div>
         <div>
             <Button disabled={entityStatus === 'loading'} size={"small"} onClick={onDeleteHandler}>

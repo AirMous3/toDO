@@ -55,7 +55,7 @@ export const Todolist = React.memo(({todolistId, title, filter, entityStatus}: T
             <div className={s.container}>
 
                 <h3 className={s.span}>
-                    <div>
+                    <div style={{maxWidth: '250px', width: '250px', textAlign: 'center'}}>
                         <EditableSpan entityStatus={entityStatus} title={title} onChangeCallBack={changeTodolistTitle}/>
                     </div>
                     <div className={s.deleteTodolistIcon}>
@@ -67,7 +67,7 @@ export const Todolist = React.memo(({todolistId, title, filter, entityStatus}: T
                 <AddItemForm addItemCallBack={addTask} disabled={entityStatus === 'loading'}/>
                 <div>
                     {tasksForTodolist.map(t =>
-                        <Task  task={t} todolistId={todolistId} key={t.id} entityStatus={t.entityStatus}/>
+                        <Task task={t} todolistId={todolistId} key={t.id} entityStatus={t.entityStatus}/>
                     )}
                 </div>
                 <div className={s.status}>
