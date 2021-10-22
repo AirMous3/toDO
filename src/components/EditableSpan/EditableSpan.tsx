@@ -1,7 +1,6 @@
 import TextField from "@mui/material/TextField/TextField";
-import React, { ChangeEvent, useState } from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {RequestStatusType} from "../../state/redux/app-Reducer";
-
 
 
 type EditableSpanPropsType = {
@@ -28,9 +27,18 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
         setEditMode(false)
         props.onChangeCallBack(title)
     }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.charCode === 13) {
+            setEditMode(false)
+            props.onChangeCallBack(title)
+        }
+    }
 
     return (editMode ?
-        <TextField disabled={props.entityStatus === 'loading' || props.entityTaskStatus === 'loading'} onBlur={onBlurEffect} autoFocus onDoubleClick={changeEditMode} onChange={onChangeTitleHandler} value={title} />
-        : <span onDoubleClick={changeEditMode}>{props.title}</span>
+            <TextField disabled={props.entityStatus === 'loading' || props.entityTaskStatus === 'loading'}
+                       onKeyPress={onKeyPressHandler}
+                       onBlur={onBlurEffect} autoFocus onDoubleClick={changeEditMode} onChange={onChangeTitleHandler}
+                       value={title}/>
+            : <span onDoubleClick={changeEditMode}>{props.title}</span>
     )
 })

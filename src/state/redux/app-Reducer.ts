@@ -11,12 +11,12 @@ type InitialStateType = {
 }
 let initialState: InitialStateType = {
     status: 'idle',
-    error: null,
-    isInitialized: false
+    error: null, /*Если будет строка, покажет эту строку в всплывашке*/
+    isInitialized: false /*True если приложение инициализированно*/
 }
 
 type ActionType =
-    ReturnType<typeof changeAppStatus>
+    ReturnType<typeof setAppStatus>
     | ReturnType<typeof setAppError>
     | ReturnType<typeof setInitialize>
 
@@ -42,7 +42,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 }
 
 ////////// AC
-export const changeAppStatus = (status: RequestStatusType) => ({type: 'CHANGE-STATUS', status}) as const
+export const setAppStatus = (status: RequestStatusType) => ({type: 'CHANGE-STATUS', status}) as const
 export const setAppError = (error: string | null) => ({type: 'SET-APP-ERROR', error}) as const
 export const setInitialize = (value: boolean) => ({type: 'SET-INITIALIZE', value}) as const
 

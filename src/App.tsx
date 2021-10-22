@@ -20,11 +20,11 @@ function App() {
 
 
     useEffect(() => {
-        dispatch(intializeAppThunk())
+        dispatch(intializeAppThunk()) /*Инициализация приложения*/
     }, [])
 
     if (!isInitialized) {
-        return <LinearProgress/>
+        return <LinearProgress/> /*Если приложение не инициализированно, показывать прелоадер*/
     }
     return (
         <div className="App">

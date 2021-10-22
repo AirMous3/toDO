@@ -18,11 +18,11 @@ export const TodolistsList = (props: PropsType) => {
     const isLoggedIn = useSelector((state: AppRootStateType) => state.loggin.isLogged)
     let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     useEffect(() => {
-        dispatch(GetTodolistsThunk())
+        dispatch(GetTodolistsThunk()) /*Получение тудулистов*/
     }, [dispatch])
 
     if (!isLoggedIn) {
-        return <Redirect to={'/login'}/>
+        return <Redirect to={'/login'}/>  /*После инициализации, если мы не залогинены, сделает редирект на логин*/
     }
 
     return <>
