@@ -71,8 +71,8 @@ export const Login = () => {
                             </a>
                         </p>
                         <p>or use common test account credentials:</p>
-                        <p>Email: airmouselol@gmail.com</p>
-                        <p>Password: 1q2w3e4r</p>
+                        <p>Email: free@samuraijs.com</p>
+                        <p>Password: free</p>
                     </FormLabel>
                     <FormGroup>
                         <TextField {...formik.getFieldProps('email')}  label="Email" margin="normal"/>

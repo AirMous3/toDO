@@ -35,7 +35,7 @@ function App() {
                 <Switch>
                     <Route exact path={'/'} render={() => <TodolistsList status={status}/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>
-                    <Route path={'/404'} render={() => <h1>page not found</h1>}/>
+                    <Route path={'/404'} render={() => <h1>404 page not found (＃＞＜)</h1>}/>
                     <Redirect from={'*'} to={'/404'}/>
                 </Switch>
             </Container>
