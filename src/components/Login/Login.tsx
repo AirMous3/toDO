@@ -28,8 +28,8 @@ export const Login = () => {
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            email: 'airmouselol@gmail.com',
-            password: '1q2w3e4r',
+            email: '',
+            password: '',
             rememberMe: false
         },
         onSubmit: values => {
