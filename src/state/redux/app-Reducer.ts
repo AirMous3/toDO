@@ -1,6 +1,8 @@
 import {Dispatch} from "redux";
-import {authAPI} from "../api/todolists-api";
-import {setIsLoggedIn} from "./loggin-Reducer";
+import {authAPI, MeResponseType, ResponseType} from "../api/todolists-api";
+import {setIsLoggedIn} from "./login-reducer";
+import {call, put, StrictEffect} from 'redux-saga/effects'
+import {AxiosResponse} from "axios";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -49,15 +51,35 @@ export const setInitialize = (value: boolean) => ({type: 'SET-INITIALIZE', value
 
 ///////// THUNK
 
-export const intializeAppThunk = () => (dispatch: Dispatch) => {
-    authAPI.authMe().then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setInitialize(true))
-            dispatch(setIsLoggedIn(true))
 
-        } else {
+export function* initializeAppSaga(): Generator<StrictEffect, void, AxiosResponse<ResponseType>> {
+    try {
+        const res = yield call(authAPI.authMe)
+        if (res.data.resultCode === 0) {
+            yield put(setInitialize(true))
+            yield put(setIsLoggedIn(true))
+
         }
-    }).finally(() => {
-        dispatch(setInitialize(true))
-    })
+
+    } finally {
+        yield put(setInitialize(true))
+    }
 }
+
+export const initializeApp = () => ({type: 'APP/INITIALIZE-APP'})
+
+
+// export const initializeAppThunk = () => async (dispatch: Dispatch) => {
+//     try {
+//         const res = await authAPI.authMe()
+//         if (res.data.resultCode === 0) {
+//             dispatch(setInitialize(true))
+//             dispatch(setIsLoggedIn(true))
+//
+//         }
+//
+//     } finally {
+//         dispatch(setInitialize(true))
+//     }
+//
+// }

@@ -15,7 +15,7 @@ type PropsType = {
 export const TodolistsList = (props: PropsType) => {
     let dispatch = useDispatch()
     const addNewTodolist = useCallback((title: string) => dispatch(CreateTodolistThunk(title)), [dispatch])
-    const isLoggedIn = useSelector((state: AppRootStateType) => state.loggin.isLogged)
+    const isLoggedIn = useSelector((state: AppRootStateType) => state.login.isLogged)
     let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     useEffect(() => {
         dispatch(GetTodolistsThunk()) /*Получение тудулистов*/

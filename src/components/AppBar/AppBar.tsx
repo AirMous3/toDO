@@ -7,11 +7,11 @@ import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/redux/store";
-import {logOutThunk} from "../../state/redux/loggin-Reducer";
+import {logOutThunk} from "../../state/redux/login-reducer";
 
 export const Header = () => {
 
-    const isLoggedIn = useSelector((state: AppRootStateType) => state.loggin.isLogged)
+    const isLoggedIn = useSelector((state: AppRootStateType) => state.login.isLogged)
     const dispatch = useDispatch()
     const logOutHandler = () => dispatch(logOutThunk())
 

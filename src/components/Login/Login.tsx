@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {loginThunk} from "../../state/redux/loggin-Reducer";
+import {loginThunk} from "../../state/redux/login-reducer";
 import {AppRootStateType} from "../../state/redux/store";
 import {Redirect} from "react-router-dom";
 import ErrorBar from "../ErrorBar/ErrorBar";
@@ -24,7 +24,7 @@ type FormikErrorType = {
 
 export const Login = () => {
 
-    const isLoggedIn = useSelector((state: AppRootStateType) => state.loggin.isLogged)
+    const isLoggedIn = useSelector((state: AppRootStateType) => state.login.isLogged)
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {

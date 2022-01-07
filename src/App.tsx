@@ -4,7 +4,7 @@ import './App.css';
 import {Header} from './components/AppBar/AppBar';
 import {AppRootStateType} from "./state/redux/store";
 import LinearBuffer from "./components/temp/Preloader";
-import {intializeAppThunk, RequestStatusType} from "./state/redux/app-Reducer";
+import {initializeApp, RequestStatusType} from "./state/redux/app-Reducer";
 import ErrorBar from "./components/ErrorBar/ErrorBar";
 import {TodolistsList} from "./components/TodolistsList/TodolistsList";
 import {Redirect, Route, Switch} from "react-router-dom";
@@ -20,7 +20,7 @@ function App() {
 
 
     useEffect(() => {
-        dispatch(intializeAppThunk()) /*Инициализация приложения*/
+        dispatch(initializeApp()) /*Инициализация приложения*/
     }, [])
 
     if (!isInitialized) {
