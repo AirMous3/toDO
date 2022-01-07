@@ -3,7 +3,7 @@ import { tasksReducer } from './tasks-Reducer';
 import { todolistsReducer } from './todolists-Reducer';
 import thunk from 'redux-thunk';
 import { appReducer, initializeAppSaga } from './app-Reducer';
-import { loginReducer } from './login-reducer';
+import { loginReducer, loginSaga, logOutSaga } from './login-reducer';
 import createSagaMiddleware from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
 
@@ -22,6 +22,7 @@ export type AppRootStateType = ReturnType<typeof RootReducer>;
 sagaMiddleware.run(rootSaga);
 
 function* rootSaga() {
-  alert('root watcher ');
   yield takeEvery('APP/INITIALIZE-APP', initializeAppSaga);
+  yield takeEvery('LOGIN/LOGIN', loginSaga);
+  yield takeEvery('LOGIN/LOGOUT', logOutSaga);
 }

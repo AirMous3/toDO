@@ -1,6 +1,8 @@
 import { Dispatch } from 'redux';
 import { setAppStatus, setAppError } from './app-Reducer';
-import { authAPI, LoginPayloadType } from '../api/todolists-api';
+import { authAPI, LoginPayloadType, ResponseType } from '../api/todolists-api';
+import { call, put, StrictEffect } from 'redux-saga/effects';
+import { AxiosResponse } from 'axios';
 
 type InitialStateType = {
   isLogged: boolean;
@@ -26,29 +28,33 @@ export const loginReducer = (
 ////////// AC
 export const setIsLoggedIn = (value: boolean) => ({ type: 'IS-LOGGED-IN', value } as const);
 
-///////// THUNK
-export const loginThunk = (payload: LoginPayloadType) => (dispatch: Dispatch) => {
-  dispatch(setAppStatus('loading'));
-  authAPI.login(payload).then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setIsLoggedIn(true));
-      dispatch(setAppStatus('succeeded'));
-    } else {
-      dispatch(setAppError(res.data.messages[0]));
-      dispatch(setAppStatus('failed'));
-    }
-  });
-};
+///////// SAGA
 
-export const logOutThunk = () => (dispatch: Dispatch) => {
-  dispatch(setAppStatus('loading'));
-  authAPI.logOut().then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setIsLoggedIn(false));
-      dispatch(setAppStatus('succeeded'));
-    } else {
-      dispatch(setAppError(res.data.messages[0]));
-      dispatch(setAppStatus('failed'));
-    }
-  });
-};
+export function* loginSaga(
+  action: ReturnType<typeof login>,
+): Generator<StrictEffect, void, AxiosResponse<ResponseType>> {
+  yield put(setAppStatus('loading'));
+  const res = yield call(authAPI.login, action.payload);
+  if (res.data.resultCode === 0) {
+    yield put(setIsLoggedIn(true));
+    yield put(setAppStatus('succeeded'));
+  } else {
+    yield put(setAppError(res.data.messages[0]));
+    yield put(setAppStatus('failed'));
+  }
+}
+
+export const login = (payload: LoginPayloadType) => ({ type: 'LOGIN/LOGIN', payload });
+
+export function* logOutSaga(): Generator<StrictEffect, void, AxiosResponse<ResponseType>> {
+  yield put(setAppStatus('loading'));
+  const res = yield call(authAPI.logOut);
+  if (res.data.resultCode === 0) {
+    yield put(setIsLoggedIn(false));
+    yield put(setAppStatus('succeeded'));
+  } else {
+    yield put(setAppError(res.data.messages[0]));
+    yield put(setAppStatus('failed'));
+  }
+}
+export const logOut = () => ({ type: 'LOGIN/LOGOUT' });

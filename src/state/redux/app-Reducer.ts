@@ -56,7 +56,7 @@ export const setAppStatus = (status: RequestStatusType) =>
 export const setAppError = (error: string | null) => ({ type: 'SET-APP-ERROR', error } as const);
 export const setInitialize = (value: boolean) => ({ type: 'SET-INITIALIZE', value } as const);
 
-///////// THUNK
+///////// SAGA
 
 export function* initializeAppSaga(): Generator<StrictEffect, void, AxiosResponse<ResponseType>> {
   try {
@@ -71,18 +71,3 @@ export function* initializeAppSaga(): Generator<StrictEffect, void, AxiosRespons
 }
 
 export const initializeApp = () => ({ type: 'APP/INITIALIZE-APP' });
-
-// export const initializeAppThunk = () => async (dispatch: Dispatch) => {
-//     try {
-//         const res = await authAPI.authMe()
-//         if (res.data.resultCode === 0) {
-//             dispatch(setInitialize(true))
-//             dispatch(setIsLoggedIn(true))
-//
-//         }
-//
-//     } finally {
-//         dispatch(setInitialize(true))
-//     }
-//
-// }
