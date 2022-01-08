@@ -3,11 +3,7 @@ import { Button } from '@mui/material';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../state/redux/store';
-import {
-  AddTaskThunk,
-  GetTasksThunk,
-  TaskEntityType,
-} from '../../state/redux/reducers/tasks-Reducer';
+import { TaskEntityType } from '../../state/redux/reducers/tasksReducer/tasksReducer';
 import {
   ChangeTodolistFilter,
   ChangeTodolistTitleThunk,
@@ -19,6 +15,7 @@ import s from './Todolist.module.css';
 import { Task } from '../Task/Task';
 import { TaskStatuses } from '../../state/api/todolists-api';
 import { RequestStatusType } from '../../state/redux/reducers/appReducer/appReducer';
+import { addTask, getTasks } from '../../state/redux/reducers/tasksReducer/sagas/actions';
 
 type TodolistPropsType = {
   todolistId: string;
@@ -34,8 +31,8 @@ export const Todolist = React.memo(
       (state) => state.tasks[todolistId],
     );
 
-    const addTask = useCallback(
-      (title: string) => dispatch(AddTaskThunk(todolistId, title)),
+    const addTaskHandler = useCallback(
+      (title: string) => dispatch(addTask(todolistId, title)),
       [todolistId, dispatch],
     );
     const changeTodolistTitle = useCallback(
@@ -61,7 +58,7 @@ export const Todolist = React.memo(
     );
 
     useEffect(() => {
-      dispatch(GetTasksThunk(todolistId));
+      dispatch(getTasks(todolistId));
     }, [dispatch, todolistId]);
 
     if (filter === 'active') {
@@ -87,7 +84,7 @@ export const Todolist = React.memo(
             </Button>
           </div>
         </h3>
-        <AddItemForm addItemCallBack={addTask} disabled={entityStatus === 'loading'} />
+        <AddItemForm addItemCallBack={addTaskHandler} disabled={entityStatus === 'loading'} />
         <div>
           {tasksForTodolist.map((t) => (
             <Task task={t} todolistId={todolistId} key={t.id} entityStatus={t.entityStatus} />

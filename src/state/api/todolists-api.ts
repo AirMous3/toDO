@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { TaskType } from '../redux/reducers/tasks-Reducer';
+import { TaskType } from '../redux/reducers/tasksReducer/tasksReducer';
 
 let instance = axios.create({
   baseURL: `https://social-network.samuraijs.com/api/1.1/`,
@@ -115,7 +115,7 @@ export type UpdateTaskType = {
   deadline?: string;
 };
 
-type GetTasksResponseType = {
+export type GetTasksResponseType = {
   items: TaskType[];
   totalCount: number;
   error: string | null;

@@ -1,13 +1,12 @@
 import {
-  AddTask,
   ChangeTaskStatus,
   ChangeTaskTitle,
-  RemoveTask,
   tasksReducer,
   TasksStateType,
-} from './reducers/tasks-Reducer';
+} from './reducers/tasksReducer/tasksReducer';
 import { AddTodolist, RemoveTodolist, todolistId1 } from './reducers/todolists-Reducer';
 import { TaskPriorities, TaskStatuses } from '../api/todolists-api';
+import { addTaskAC, removeTask } from './reducers/tasksReducer/actions/tasksActions';
 
 let startState: TasksStateType = {};
 
@@ -93,7 +92,7 @@ beforeEach(() => {
 });
 
 test('correct task should be deleted from correct array', () => {
-  const action = RemoveTask('2', 'todolistId2');
+  const action = removeTask('2', 'todolistId2');
 
   const endState = tasksReducer(startState, action);
 
@@ -167,7 +166,7 @@ test('correct task should be deleted from correct array', () => {
 });
 
 test('correct task should be added to correct array', () => {
-  const action = AddTask('juce', 'todolistId2');
+  const action = addTaskAC('juce', 'todolistId2');
   const endState = tasksReducer(startState, action);
 
   expect(endState['todolistId1'].length).toBe(3);

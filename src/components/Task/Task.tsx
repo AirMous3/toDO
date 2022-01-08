@@ -1,9 +1,5 @@
 import React, { ChangeEvent, useCallback } from 'react';
-import {
-  DeleteTaskThunk,
-  TaskType,
-  UpdateTaskThunk,
-} from '../../state/redux/reducers/tasks-Reducer';
+import { TaskType } from '../../state/redux/reducers/tasksReducer/tasksReducer';
 import s from '../Todolist/Todolist.module.css';
 import { Button, Checkbox } from '@mui/material';
 import { EditableSpan } from '../EditableSpan/EditableSpan';
@@ -11,6 +7,8 @@ import { HighlightOffOutlined } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { TaskStatuses } from '../../state/api/todolists-api';
 import { RequestStatusType } from '../../state/redux/reducers/appReducer/appReducer';
+import { deleteTask } from '../../state/redux/reducers/tasksReducer/sagas/actions';
+import { updateTask } from '../../state/redux/reducers/tasksReducer/actions/tasksActions';
 
 type PropsTaskType = {
   task: TaskType;
@@ -19,17 +17,17 @@ type PropsTaskType = {
 };
 export const Task = React.memo(({ task, todolistId, entityStatus }: PropsTaskType) => {
   let dispatch = useDispatch();
-  const onDeleteHandler = () => dispatch(DeleteTaskThunk(task.id, todolistId)); // удаление таски
+  const onDeleteHandler = () => dispatch(deleteTask(task.id, todolistId)); // удаление таски
   const onIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(
-      UpdateTaskThunk(task.todoListId, task.id, {
+      updateTask(task.todoListId, task.id, {
         status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
       }),
     ); /*смена статуса таски ,  если чекд true - тогда Completed иначе New*/
   };
   const onChangeTaskTitle = useCallback(
     (newTitle: string) => {
-      dispatch(UpdateTaskThunk(todolistId, task.id, { title: newTitle })); // смена имени таски
+      dispatch(updateTask(todolistId, task.id, { title: newTitle })); // смена имени таски
     },
     [dispatch, task.id, todolistId],
   );

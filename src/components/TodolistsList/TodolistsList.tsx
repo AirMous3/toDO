@@ -44,10 +44,9 @@ export const TodolistsList = (props: PropsType) => {
       <Grid container spacing={2} justifyContent={'center'}>
         {todolists.map((tl) => {
           return (
-            <Grid item>
+            <Grid item key={tl.id}>
               <Paper style={{ padding: '20px' }}>
                 <Todolist
-                  key={tl.id}
                   todolistId={tl.id}
                   title={tl.title}
                   filter={tl.filter}
