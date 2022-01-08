@@ -1,7 +1,8 @@
 import { v1 } from 'uuid';
-import { todolistsAPI } from '../api/todolists-api';
+import { todolistsAPI } from '../../api/todolists-api';
 import { Dispatch } from 'redux';
-import { setAppStatus, RequestStatusType, setAppError } from './app-Reducer';
+import { RequestStatusType } from './appReducer/appReducer';
+import { setAppError, setAppStatus } from './appReducer/actions/appActions';
 
 export const todolistId1 = v1();
 export const todolistId2 = v1();

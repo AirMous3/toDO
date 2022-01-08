@@ -7,12 +7,14 @@ import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../state/redux/store';
-import { logOut } from '../../state/redux/login-reducer';
+import { logOut } from '../../state/redux/reducers/loginReducer/sagas/actions';
 
 export const Header = () => {
   const isLoggedIn = useSelector((state: AppRootStateType) => state.login.isLogged);
   const dispatch = useDispatch();
-  const logOutHandler = () => dispatch(logOut());
+  const logOutHandler = () => {
+    dispatch(logOut());
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>

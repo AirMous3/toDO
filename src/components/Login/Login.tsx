@@ -9,9 +9,9 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../state/redux/login-reducer';
 import { AppRootStateType } from '../../state/redux/store';
 import { Redirect } from 'react-router-dom';
+import { login } from '../../state/redux/reducers/loginReducer/sagas/actions';
 
 type FormikErrorType = {
   email?: string;
@@ -21,15 +21,17 @@ type FormikErrorType = {
 
 export const Login = () => {
   const isLoggedIn = useSelector((state: AppRootStateType) => state.login.isLogged);
+
   const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
       rememberMe: false,
     },
-    onSubmit: (values) => {
-      dispatch(login(values));
+    onSubmit: (formData) => {
+      dispatch(login(formData));
       formik.resetForm({
         values: { email: '', password: '', rememberMe: false },
       });

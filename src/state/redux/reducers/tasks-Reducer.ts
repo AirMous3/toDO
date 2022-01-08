@@ -4,10 +4,16 @@ import {
   RemoveTodolist,
   SetTodolists,
 } from './todolists-Reducer';
-import { TaskPriorities, TaskStatuses, todolistsAPI, UpdateTaskType } from '../api/todolists-api';
+import {
+  TaskPriorities,
+  TaskStatuses,
+  todolistsAPI,
+  UpdateTaskType,
+} from '../../api/todolists-api';
 import { Dispatch } from 'redux';
-import { AppRootStateType } from './store';
-import { setAppStatus, RequestStatusType, setAppError } from './app-Reducer';
+import { AppRootStateType } from '../store';
+import { RequestStatusType } from './appReducer/appReducer';
+import { setAppError, setAppStatus } from './appReducer/actions/appActions';
 
 ///////////////////////// TYPE
 export type TasksStateType = {
