@@ -2,16 +2,16 @@ import Grid from '@mui/material/Grid/Grid';
 import Paper from '@mui/material/Paper/Paper';
 import { Todolist } from '../Todolist/Todolist';
 import React, { useCallback, useEffect } from 'react';
-import {
-  CreateTodolistThunk,
-  GetTodolistsThunk,
-  TodolistDomainType,
-} from '../../state/redux/reducers/todolists-Reducer';
+import { TodolistDomainType } from '../../state/redux/reducers/todolistsReducer/todolistsReducer';
 import { AddItemForm } from '../AddItemForm/AddItemForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../state/redux/store';
 import { RequestStatusType } from '../../state/redux/reducers/appReducer/appReducer';
 import { Redirect } from 'react-router-dom';
+import {
+  createTodolist,
+  getTodolists,
+} from '../../state/redux/reducers/todolistsReducer/sagas/actions';
 
 type PropsType = {
   status: RequestStatusType;
@@ -19,7 +19,7 @@ type PropsType = {
 export const TodolistsList = (props: PropsType) => {
   let dispatch = useDispatch();
   const addNewTodolist = useCallback(
-    (title: string) => dispatch(CreateTodolistThunk(title)),
+    (title: string) => dispatch(createTodolist(title)),
     [dispatch],
   );
   const isLoggedIn = useSelector((state: AppRootStateType) => state.login.isLogged);
@@ -27,7 +27,7 @@ export const TodolistsList = (props: PropsType) => {
     (state) => state.todolists,
   );
   useEffect(() => {
-    dispatch(GetTodolistsThunk()); /*Получение тудулистов*/
+    dispatch(getTodolists()); /*Получение тудулистов*/
   }, [dispatch]);
 
   if (!isLoggedIn) {

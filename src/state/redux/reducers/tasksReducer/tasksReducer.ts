@@ -1,14 +1,5 @@
-import { AddTodolist, RemoveTodolist, SetTodolists } from '../todolists-Reducer';
-import {
-  TaskPriorities,
-  TaskStatuses,
-  todolistsAPI,
-  UpdateTaskType,
-} from '../../../api/todolists-api';
-import { Dispatch } from 'redux';
-import { AppRootStateType } from '../../store';
+import { TaskPriorities, TaskStatuses } from '../../../api/todolists-api';
 import { RequestStatusType } from '../appReducer/appReducer';
-import { setAppError, setAppStatus } from '../appReducer/actions';
 import {
   TASKS_REDUCER_ADD_TASK,
   TASKS_REDUCER_CHANGE_TASK_ENTITY_STATUS,
@@ -16,13 +7,13 @@ import {
   TASKS_REDUCER_SET_TASKS,
   TASKS_REDUCER_UPDATE_TASK,
 } from './constants';
+import { addTaskAC, changeTaskEntityStatus, removeTask, setTasks, updateTaskAC } from './actions';
 import {
-  addTaskAC,
-  changeTaskEntityStatus,
-  removeTask,
-  setTasks,
-  updateTaskAC,
-} from './actions/tasksActions';
+  TODOLISTS_REDUCER_ADD_TODOLIST,
+  TODOLISTS_REDUCER_REMOVE_TODOLIST,
+  TODOLISTS_REDUCER_SET_TODOLISTS,
+} from '../todolistsReducer/constants';
+import { addTodolist, removeTodolistAC, setTodolists } from '../todolistsReducer/actions';
 
 ///////////////////////// TYPE
 export type TasksStateType = {
@@ -46,9 +37,9 @@ export type TaskEntityType = TaskType & { entityStatus: RequestStatusType };
 type ActionsType =
   | ReturnType<typeof addTaskAC>
   | ReturnType<typeof removeTask>
-  | ReturnType<typeof AddTodolist>
-  | ReturnType<typeof RemoveTodolist>
-  | ReturnType<typeof SetTodolists>
+  | ReturnType<typeof addTodolist>
+  | ReturnType<typeof removeTodolistAC>
+  | ReturnType<typeof setTodolists>
   | ReturnType<typeof setTasks>
   | ReturnType<typeof updateTaskAC>
   | ReturnType<typeof changeTaskEntityStatus>;
@@ -74,6 +65,7 @@ export const tasksReducer = (
         [action.task.todoListId]: [action.task, ...state[action.task.todoListId]],
       };
     }
+
     case TASKS_REDUCER_UPDATE_TASK:
       return {
         ...state,
@@ -82,17 +74,20 @@ export const tasksReducer = (
         ),
       };
 
-    case 'ADD-TODOLIST':
+    case TODOLISTS_REDUCER_ADD_TODOLIST:
       return { ...state, [action.payload.id]: [] };
-    case 'REMOVE-TODOLIST':
+
+    case TODOLISTS_REDUCER_REMOVE_TODOLIST:
       let copyState = { ...state };
       delete copyState[action.id];
       return copyState;
-    case 'SET-TODOLISTS': {
+
+    case TODOLISTS_REDUCER_SET_TODOLISTS: {
       let copyState = { ...state };
       action.todolists.forEach((t) => (copyState[t.id] = []));
       return copyState;
     }
+
     case TASKS_REDUCER_CHANGE_TASK_ENTITY_STATUS:
       return {
         ...state,
@@ -100,6 +95,7 @@ export const tasksReducer = (
           t.id === action.taskId ? { ...t, entityStatus: action.entityStatus } : t,
         ),
       };
+
     case TASKS_REDUCER_SET_TASKS: {
       let copyState = { ...state };
       copyState[action.todolistId] = action.tasks;

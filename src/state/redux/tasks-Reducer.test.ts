@@ -4,7 +4,11 @@ import {
   tasksReducer,
   TasksStateType,
 } from './reducers/tasksReducer/tasksReducer';
-import { AddTodolist, RemoveTodolist, todolistId1 } from './reducers/todolists-Reducer';
+import {
+  addTodolist,
+  removeTodolist,
+  todolistId1,
+} from './reducers/todolistsReducer/todolistsReducer';
 import { TaskPriorities, TaskStatuses } from '../api/todolists-api';
 import { addTaskAC, removeTask } from './reducers/tasksReducer/actions/tasksActions';
 
@@ -193,7 +197,7 @@ test('title of specified task should be changed', () => {
 });
 
 test('new array should be added when new todolist is added', () => {
-  const action = AddTodolist('new todolist');
+  const action = addTodolist('new todolist');
   const endState = tasksReducer(startState, action);
   const keys = Object.keys(endState);
   const newKey = keys.find((k) => k != 'todolistId1' && k != 'todolistId2');
@@ -206,7 +210,7 @@ test('new array should be added when new todolist is added', () => {
 });
 
 test('property with todolistId should be deleted', () => {
-  const action = RemoveTodolist('todolistId2');
+  const action = removeTodolist('todolistId2');
   const endState = tasksReducer(startState, action);
   const keys = Object.keys(endState);
 

@@ -4,11 +4,6 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../state/redux/store';
 import { TaskEntityType } from '../../state/redux/reducers/tasksReducer/tasksReducer';
-import {
-  ChangeTodolistFilter,
-  ChangeTodolistTitleThunk,
-  RemoveTodolistThunk,
-} from '../../state/redux/reducers/todolists-Reducer';
 import { AddItemForm } from '../AddItemForm/AddItemForm';
 import { EditableSpan } from '../EditableSpan/EditableSpan';
 import s from './Todolist.module.css';
@@ -16,6 +11,11 @@ import { Task } from '../Task/Task';
 import { TaskStatuses } from '../../state/api/todolists-api';
 import { RequestStatusType } from '../../state/redux/reducers/appReducer/appReducer';
 import { addTask, getTasks } from '../../state/redux/reducers/tasksReducer/sagas/actions';
+import { changeTodolistFilter } from '../../state/redux/reducers/todolistsReducer/actions';
+import {
+  changeTodolistTitle,
+  removeTodolist,
+} from '../../state/redux/reducers/todolistsReducer/sagas/actions';
 
 type TodolistPropsType = {
   todolistId: string;
@@ -35,25 +35,25 @@ export const Todolist = React.memo(
       (title: string) => dispatch(addTask(todolistId, title)),
       [todolistId, dispatch],
     );
-    const changeTodolistTitle = useCallback(
-      (newTitle: string) => dispatch(ChangeTodolistTitleThunk(todolistId, newTitle)),
+    const changeTodolistTitleHandler = useCallback(
+      (newTitle: string) => dispatch(changeTodolistTitle(todolistId, newTitle)),
       [dispatch, todolistId],
     );
-    const removeTodolist = useCallback(
-      () => dispatch(RemoveTodolistThunk(todolistId)),
+    const removeTodolistHandler = useCallback(
+      () => dispatch(removeTodolist(todolistId)),
       [dispatch, todolistId],
     );
 
     const onAllFilter = useCallback(
-      () => dispatch(ChangeTodolistFilter(todolistId, 'all')),
+      () => dispatch(changeTodolistFilter(todolistId, 'all')),
       [todolistId, dispatch],
     );
     const onActiveFilter = useCallback(
-      () => dispatch(ChangeTodolistFilter(todolistId, 'active')),
+      () => dispatch(changeTodolistFilter(todolistId, 'active')),
       [todolistId, dispatch],
     );
     const onCompletedFilter = useCallback(
-      () => dispatch(ChangeTodolistFilter(todolistId, 'completed')),
+      () => dispatch(changeTodolistFilter(todolistId, 'completed')),
       [todolistId, dispatch],
     );
 
@@ -75,11 +75,15 @@ export const Todolist = React.memo(
             <EditableSpan
               entityStatus={entityStatus}
               title={title}
-              onChangeCallBack={changeTodolistTitle}
+              onChangeCallBack={changeTodolistTitleHandler}
             />
           </div>
           <div className={s.deleteTodolistIcon}>
-            <Button size={'small'} onClick={removeTodolist} disabled={entityStatus === 'loading'}>
+            <Button
+              size={'small'}
+              onClick={removeTodolistHandler}
+              disabled={entityStatus === 'loading'}
+            >
               <DeleteOutlined />
             </Button>
           </div>

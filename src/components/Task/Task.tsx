@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { TaskStatuses } from '../../state/api/todolists-api';
 import { RequestStatusType } from '../../state/redux/reducers/appReducer/appReducer';
 import { deleteTask } from '../../state/redux/reducers/tasksReducer/sagas/actions';
-import { updateTask } from '../../state/redux/reducers/tasksReducer/actions/tasksActions';
+import { updateTask } from '../../state/redux/reducers/tasksReducer/actions';
 
 type PropsTaskType = {
   task: TaskType;

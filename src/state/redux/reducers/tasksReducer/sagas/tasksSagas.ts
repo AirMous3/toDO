@@ -16,7 +16,6 @@ import {
   TASKS_SAGA_UPDATE_TASK,
 } from '../constants';
 import { addTask, deleteTask, getTasks } from './actions';
-import { changeTodolistEntityStatus } from '../../todolists-Reducer';
 import {
   addTaskAC,
   changeTaskEntityStatus,
@@ -24,8 +23,9 @@ import {
   setTasks,
   updateTask,
   updateTaskAC,
-} from '../actions/tasksActions';
+} from '../actions';
 import { store } from '../../../store';
+import { changeTodolistEntityStatus } from '../../todolistsReducer/actions';
 
 export function* tasksWatcherSaga() {
   yield takeEvery(TASKS_SAGA_GET_TASKS, getTasksSaga);
